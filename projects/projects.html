@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | ZeroNight</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="particles-container" id="particles-js"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="../index/index.html">ZeroNight</a>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../index/index.html">Home</a></li>
+                <li class="nav-item active"><a href="../projects/projects.html">Projects</a></li>
+                <li class="nav-item"><a href="../about/about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <header class="page-header">
+            <h1 class="page-title">My Projects</h1>
+            <div class="page-subtitle">Timeline of my journey</div>
+        </header>
+
+        <section class="timeline-wrapper">
+            <div class="current-date" id="timeline-current-date">
+                <div class="date-marker"></div>
+                <div class="date-content"></div>
+            </div>
+            
+            <div class="timeline" id="timeline">
+                <!-- Timeline items will be generated here -->
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; <span id="current-year"></span> Love World</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+    // 页面加载完成后执行
+    document.addEventListener("DOMContentLoaded", function() {
+        const timeline = document.getElementById('timeline');
+
+        // 定义时间线事件
+        const events = [
+            {
+                title: "NFUCourse - Development Complete",
+                date: new Date("2025-04-02"),
+                description: "Successfully completed the development of the NFUCourse project. Implemented all planned features and conducted thorough testing.",
+                tags: ["Milestone", "Development"]
+            },
+            {
+                title: "NFUCourse - Project Launch",
+                date: new Date("2025-03-06"),
+                description: "Officially began development of the NFUCourse project. Set up the development environment and created the initial project structure.",
+                tags: ["Start", "Planning"]
+            },
+            {
+                title: "I Met You",
+                date: new Date(), // 当前时间
+                description: "The day everything changed. A new journey begins.",
+                tags: ["Special"],
+                special: true
+            }
+        ];
+
+        // 按时间倒序排列（最近的在前）
+        events.sort((a, b) => b.date - a.date);
+
+        // 生成时间线HTML
+        events.forEach(event => {
+            const item = document.createElement('div');
+            item.className = 'timeline-item' + (event.special ? ' timeline-item-special' : '');
+
+            const dot = document.createElement('div');
+            dot.className = 'timeline-dot';
+
+            const dateEl = document.createElement('div');
+            dateEl.className = 'timeline-date';
+            dateEl.textContent = event.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            const content = document.createElement('div');
+            content.className = 'timeline-content';
+
+            const title = document.createElement('h3');
+            title.textContent = event.title;
+
+            const desc = document.createElement('p');
+            desc.textContent = event.description;
+
+            const tags = document.createElement('div');
+            tags.className = 'timeline-tags';
+            event.tags.forEach(tagText => {
+                const tag = document.createElement('span');
+                tag.className = 'tag' + (event.special ? ' tag-special' : '');
+                tag.textContent = tagText;
+                tags.appendChild(tag);
+            });
+
+            content.appendChild(title);
+            content.appendChild(desc);
+            content.appendChild(tags);
+
+            item.appendChild(dot);
+            item.appendChild(dateEl);
+            item.appendChild(content);
+
+            timeline.appendChild(item);
+        });
+
+        // 设置当前年份
+        const yearSpan = document.getElementById('current-year');
+        if (yearSpan) {
+            yearSpan.textContent = new Date().getFullYear();
+        }
+    });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

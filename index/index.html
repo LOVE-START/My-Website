@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeroNight | World</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="particles-container" id="particles-js"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="../index/index.html">ZeroNight</a>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active"><a href="../index/index.html">Home</a></li>
+                <li class="nav-item"><a href="../projects/projects.html">Projects</a></li>
+                <li class="nav-item"><a href="../about/about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="hero-section">
+            <div class="hero-content">
+                <div class="hero-date" id="current-date">Today is...</div>
+                <h1 class="hero-title">I met <span class="highlight-text">you</span> today</h1>
+                <p class="hero-subtitle">Every moment is a new beginning</p>
+                <div class="hero-actions">
+                    <a href="../about/about.html" class="btn btn-primary">About Me</a>
+                    <a href="../projects/projects.html" class="btn btn-secondary">My Projects</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="orbiting-circle"></div>
+                <div class="glow-effect"></div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; <span id="current-year"></span> Love World</p>
+        </footer>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

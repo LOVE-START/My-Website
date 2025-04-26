@@ -1,0 +1,834 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', 'Microsoft YaHei', sans-serif;
+}
+
+:root {
+    --primary-color: #6c63ff;
+    --secondary-color: #ff6b95;
+    --tertiary-color: #43cbff;
+    --text-color: #f0f0f0;
+    --dark-bg: #0f0f1a;
+    --card-bg: rgba(25, 25, 40, 0.7);
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --glow: 0 0 20px rgba(108, 99, 255, 0.5);
+    --alive-color: #36f1cd;
+    --orbit-color: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    background: var(--dark-bg);
+    color: var(--text-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 0;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* 导航栏样式 */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(15, 15, 26, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.logo a {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-color);
+    text-decoration: none;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+}
+
+.nav-item {
+    margin-left: 2rem;
+    position: relative;
+}
+
+.nav-item a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    padding: 0.5rem 0;
+    transition: color 0.3s;
+    position: relative;
+}
+
+.nav-item a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    transition: width 0.3s ease;
+}
+
+.nav-item a:hover {
+    color: var(--primary-color);
+}
+
+.nav-item a:hover::after,
+.nav-item.active a::after {
+    width: 100%;
+}
+
+.nav-item.active a {
+    color: var(--primary-color);
+}
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.nav-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: var(--text-color);
+    margin-bottom: 5px;
+    border-radius: 3px;
+    transition: all 0.3s;
+}
+
+/* 容器样式 */
+.container {
+    max-width: 1000px;
+    width: 90%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+    padding-top: 6rem;
+}
+
+/* 页面通用头部 */
+.page-header {
+    text-align: center;
+    margin: 2rem 0 4rem;
+}
+
+.page-title {
+    font-size: 3rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, #fff, rgba(255, 255, 255, 0.8));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+.page-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 1px;
+}
+
+/* About页面样式 */
+.about-intro {
+    margin-bottom: 3rem;
+}
+
+.about-card {
+    background: var(--card-bg);
+    border-radius: 1.5rem;
+    padding: 3rem;
+    box-shadow: var(--shadow);
+    margin-bottom: 3rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.about-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--tertiary-color));
+}
+
+.about-content {
+    position: relative;
+    z-index: 2;
+}
+
+.about-tagline {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    margin: 1rem 0;
+    letter-spacing: 1px;
+}
+
+.about-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 800px;
+}
+
+/* 生命计时器样式 - 宇宙风格 */
+.life-counter {
+    text-align: center;
+    padding: 3rem 2rem 2.5rem;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--card-bg);
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow);
+    margin-bottom: 3rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.life-counter::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--tertiary-color));
+}
+
+.life-title {
+    position: relative;
+    margin-bottom: 3rem;
+}
+
+.life-title h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    display: inline-block;
+}
+
+.life-title h2::after {
+    display: none;
+}
+
+.alive-text {
+    background: linear-gradient(45deg, var(--alive-color), var(--tertiary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+}
+
+.alive-text::after {
+    content: 'Alive';
+    position: absolute;
+    left: 0;
+    top: 0;
+    -webkit-text-fill-color: transparent;
+    filter: blur(8px);
+    opacity: 0.8;
+    z-index: -1;
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.life-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(54, 241, 205, 0.1) 0%, rgba(54, 241, 205, 0) 70%);
+    z-index: -1;
+    animation: pulse-rings 2s ease-in-out infinite;
+}
+
+.cosmos-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    margin: 0 auto 2rem;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+.star {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--alive-color) 0%, rgba(54, 241, 205, 0.7) 40%, rgba(54, 241, 205, 0) 70%);
+    box-shadow: 0 0 20px 5px rgba(54, 241, 205, 0.7);
+    animation: star-pulse 3s ease-in-out infinite;
+}
+
+.orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid var(--orbit-color);
+    border-radius: 50%;
+    animation: orbit-rotate 60s linear infinite;
+}
+
+.orbit-1 {
+    width: 180px;
+    height: 180px;
+}
+
+.orbit-2 {
+    width: 240px;
+    height: 240px;
+    transform: translate(-50%, -50%) rotate(45deg);
+    animation-direction: reverse;
+    animation-duration: 45s;
+}
+
+.orbit-3 {
+    width: 300px;
+    height: 300px;
+    transform: translate(-50%, -50%) rotate(90deg);
+    animation-duration: 30s;
+}
+
+.planet {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    color: #fff;
+    transform-style: preserve-3d;
+    animation: planet-float 5s ease-in-out infinite;
+}
+
+.planet-years {
+    background: radial-gradient(circle at 30% 30%, var(--primary-color), rgba(108, 99, 255, 0.8));
+    box-shadow: 0 0 15px 2px rgba(108, 99, 255, 0.5);
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.planet-days {
+    background: radial-gradient(circle at 30% 30%, var(--secondary-color), rgba(255, 107, 149, 0.8));
+    box-shadow: 0 0 15px 2px rgba(255, 107, 149, 0.5);
+    top: 50%;
+    right: -35px;
+    transform: translateY(-50%);
+    animation-delay: 0.5s;
+}
+
+.planet-hours {
+    background: radial-gradient(circle at 30% 30%, var(--tertiary-color), rgba(67, 203, 255, 0.8));
+    box-shadow: 0 0 15px 2px rgba(67, 203, 255, 0.5);
+    bottom: -35px;
+    left: 30%;
+    animation-delay: 1s;
+}
+
+.planet span {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    line-height: 1;
+    margin-bottom: -3px;
+}
+
+.planet-label {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1;
+}
+
+.life-since {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
+}
+
+/* 联系方式样式 */
+.contact {
+    background: var(--card-bg);
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow);
+    padding: 2.5rem;
+    margin-bottom: 2.5rem;
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.contact::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--tertiary-color));
+}
+
+.contact h2 {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 2rem;
+    position: relative;
+    padding-bottom: 0.8rem;
+    letter-spacing: 1px;
+    text-align: center;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+.contact h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    border-radius: 3px;
+    transform: translateX(-50%);
+}
+
+.contact-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+    background: rgba(30, 30, 50, 0.5);
+    border-radius: 1.5rem;
+    transition: var(--transition);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(108, 99, 255, 0.1), rgba(255, 107, 149, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+}
+
+.contact-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 15px rgba(108, 99, 255, 0.3);
+}
+
+.contact-item:hover::before {
+    opacity: 1;
+}
+
+.icon {
+    font-size: 2.5rem;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-right: 1.5rem;
+    min-width: 60px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.contact-item:hover .icon {
+    transform: scale(1.2) rotate(5deg);
+}
+
+.icon i {
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.info {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+}
+
+.info h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.info p, .info a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+    position: relative;
+    display: inline-block;
+}
+
+.info a:hover {
+    color: var(--secondary-color);
+}
+
+.copy-indicator {
+    position: relative;
+    margin-top: 0.5rem;
+    height: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.tooltip, .copied-tooltip {
+    position: absolute;
+    font-size: 0.8rem;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.copied-tooltip {
+    opacity: 0;
+    transform: translateY(10px);
+    color: var(--primary-color);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.contact-item.copied .copied-tooltip {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 1.5rem 0;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    position: relative;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+}
+
+/* 动画效果 */
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.2;
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 0.1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse-glow {
+    0% {
+        filter: blur(8px);
+        opacity: 0.5;
+    }
+    50% {
+        filter: blur(12px);
+        opacity: 0.8;
+    }
+    100% {
+        filter: blur(8px);
+        opacity: 0.5;
+    }
+}
+
+@keyframes pulse-rings {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.5;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.3;
+    }
+}
+
+@keyframes star-pulse {
+    0% {
+        box-shadow: 0 0 20px 5px rgba(54, 241, 205, 0.5);
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        box-shadow: 0 0 30px 10px rgba(54, 241, 205, 0.7);
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+    100% {
+        box-shadow: 0 0 20px 5px rgba(54, 241, 205, 0.5);
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes orbit-rotate {
+    0% {
+        transform: translate(-50%, -50%) rotate(0);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes planet-float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        flex-direction: column;
+        background: rgba(15, 15, 26, 0.95);
+        backdrop-filter: blur(10px);
+        width: 80%;
+        height: 100vh;
+        padding-top: 5rem;
+        transition: left 0.3s ease;
+        z-index: 900;
+    }
+    
+    .nav-menu.active {
+        left: 0;
+    }
+    
+    .nav-item {
+        margin: 1.5rem 0;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .nav-toggle {
+        display: flex;
+        z-index: 1000;
+    }
+    
+    .nav-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 6px);
+    }
+    
+    .nav-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .nav-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -6px);
+    }
+    
+    .cosmos-container {
+        height: 250px;
+    }
+    
+    .orbit-1 {
+        width: 140px;
+        height: 140px;
+    }
+    
+    .orbit-2 {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .orbit-3 {
+        width: 260px;
+        height: 260px;
+    }
+    
+    .planet {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .planet span {
+        font-size: 1.6rem;
+    }
+    
+    .contact-items {
+        grid-template-columns: 1fr;
+    }
+
+    .page-title {
+        font-size: 2.5rem;
+    }
+    
+    .life-title h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-container {
+        padding: 0 1rem;
+    }
+    
+    .container {
+        padding-top: 5rem;
+    }
+    
+    .orbit-1 {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .orbit-2 {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .orbit-3 {
+        width: 240px;
+        height: 240px;
+    }
+    
+    .planet {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .planet span {
+        font-size: 1.4rem;
+    }
+    
+    .planet-label {
+        font-size: 0.7rem;
+    }
+    
+    .life-counter {
+        padding: 2rem 1rem;
+        min-height: 400px;
+    }
+    
+    section {
+        padding: 2rem 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+    
+    .life-title h2 {
+        font-size: 2rem;
+    }
+} 

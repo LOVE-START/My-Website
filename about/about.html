@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | ZeroNight</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="particles-container" id="particles-js"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="../index/index.html">ZeroNight</a>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../index/index.html">Home</a></li>
+                <li class="nav-item"><a href="../projects/projects.html">Projects</a></li>
+                <li class="nav-item active"><a href="../about/about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <header class="page-header">
+            <h1 class="page-title">About Me</h1>
+            <div class="page-subtitle">♥</div>
+        </header>
+
+        <section class="about-intro">
+            <div class="about-card">
+                <div class="about-content">
+                    <h2>ZeroNight</h2>
+                    <p class="about-tagline">Developer, Creator, Dreamer</p>
+                    <p class="about-text">
+                        Welcome to my digital space. I'm passionate about creating innovative solutions and bringing ideas to life through code.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="life-counter">
+            <div class="life-title">
+                <h2>I'm <span class="alive-text">Alive</span></h2>
+                <div class="life-pulse"></div>
+            </div>
+            
+            <div class="cosmos-container">
+                <div class="orbit orbit-1">
+                    <div class="planet planet-years">
+                        <span id="years">0</span>
+                        <div class="planet-label">Years</div>
+                    </div>
+                </div>
+                <div class="orbit orbit-2">
+                    <div class="planet planet-days">
+                        <span id="days">0</span>
+                        <div class="planet-label">Days</div>
+                    </div>
+                </div>
+                <div class="orbit orbit-3">
+                    <div class="planet planet-hours">
+                        <span id="hours">0</span>
+                        <div class="planet-label">Hours</div>
+                    </div>
+                </div>
+                <div class="star"></div>
+            </div>
+            
+            <p class="life-since">Since March 19, 2004</p>
+        </section>
+
+        <section class="contact">
+            <h2>Contact</h2>
+            <div class="contact-items">
+                <div class="contact-item" data-clipboard="Zero__Night">
+                    <div class="icon"><i class="fab fa-weixin"></i></div>
+                    <div class="info">
+                        <h3>WeChat</h3>
+                        <p id="wechat-text">Zero__Night</p>
+                        <div class="copy-indicator">
+                            <span class="copied-tooltip">Copied!</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-item" data-clipboard="candy_night@163.com">
+                    <div class="icon"><i class="far fa-envelope"></i></div>
+                    <div class="info">
+                        <h3>Email</h3>
+                        <a href="mailto:candy_night@163.com" id="email-text">Candy_Night@163.com</a>
+                        <div class="copy-indicator">
+                            <span class="copied-tooltip">Copied!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; <span id="current-year"></span> Love World</p>
+        </footer>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
