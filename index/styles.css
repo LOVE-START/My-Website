@@ -212,6 +212,10 @@ body {
     flex: 1;
     max-width: 600px;
     z-index: 2;
+    padding-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .hero-date {
@@ -232,6 +236,7 @@ body {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    position: relative;
 }
 
 .highlight-text {
@@ -252,6 +257,20 @@ body {
     height: 3px;
     background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
     border-radius: 3px;
+}
+
+.highlight-text::before {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    background: var(--secondary-color);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--secondary-color);
+    opacity: 0.7;
+    animation: pulse 2s infinite;
 }
 
 .hero-subtitle {
@@ -321,10 +340,13 @@ body {
     position: relative;
     height: 400px;
     max-width: 350px;
-    margin-left: 2rem;
+    margin-left: 0;
+    margin-right: 2rem;
     display: flex;
-    align-items: flex-start;
-    padding-top: 30px;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-60px);
+    left: -30px;
 }
 
 .orbiting-circle {
@@ -333,10 +355,12 @@ body {
     height: 250px;
     border-radius: 50%;
     border: 2px solid var(--orbit-color);
-    top: 40%;
+    top: 42%;
     left: 50%;
     transform: translate(-50%, -50%);
     animation: rotate 20s linear infinite;
+    box-shadow: none;
+    opacity: 0.9;
 }
 
 .orbiting-circle::before {
@@ -350,7 +374,22 @@ body {
     left: calc(50% - 22px);
     box-shadow: var(--orb-glow);
     animation: pulse 2s ease-in-out infinite;
-    opacity: 0.95;
+    opacity: 0.98;
+}
+
+/* 添加一个额外的旋转元素，形成双轨道效果 */
+.orbiting-circle::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 1px solid var(--orbit-color);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: rotate 15s linear infinite reverse;
+    opacity: 0.4;
 }
 
 .glow-effect {
@@ -359,12 +398,33 @@ body {
     height: 200px;
     background: radial-gradient(circle, var(--primary-color) 0%, rgba(245, 168, 142, 0) 70%);
     border-radius: 50%;
-    opacity: 0.3;
-    top: 40%;
+    opacity: 0.2;
+    top: 42%;
     left: 50%;
     transform: translate(-50%, -50%);
     filter: blur(20px);
     animation: pulse 3s ease-in-out infinite;
+}
+
+/* 添加一个新的小球体，形成第二个运行的轨道 */
+.hero-visual::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: var(--secondary-color);
+    top: 45%;
+    right: 22%;
+    box-shadow: 0 0 15px var(--secondary-color);
+    animation: rotate-opposite 12s linear infinite;
+    z-index: 3;
+}
+
+/* 新增一个动画，方向相反的旋转 */
+@keyframes rotate-opposite {
+    0% { transform: rotate(0) translateX(120px) rotate(0); }
+    100% { transform: rotate(-360deg) translateX(120px) rotate(360deg); }
 }
 
 footer {
@@ -441,7 +501,7 @@ footer::before {
     }
     
     .hero-title {
-        font-size: 3rem;
+        font-size: 3.5rem;
     }
     
     .hero-subtitle {
@@ -454,7 +514,12 @@ footer::before {
     }
     
     .hero-visual {
-        margin-top: 3rem;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: -30px;
+        transform: translateY(0);
+        height: 350px;
+        left: 0;
     }
 }
 
@@ -506,12 +571,31 @@ footer::before {
     }
     
     .hero-visual {
+        margin-top: 10px;
+        transform: translateY(0);
         height: 300px;
+        left: 0;
     }
     
     .orbiting-circle {
-        width: 250px;
-        height: 250px;
+        width: 200px;
+        height: 200px;
+        top: 50%;
+    }
+    
+    .glow-effect {
+        top: 50%;
+    }
+    
+    .orbiting-circle::after {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .hero-visual::after {
+        width: 20px;
+        height: 20px;
+        right: 25%;
     }
     
     .theme-toggle-icon {
@@ -549,31 +633,66 @@ footer::before {
         width: 100%;
     }
     
+    .hero-visual {
+        margin-top: 20px;
+        transform: translateY(0);
+        height: 250px;
+    }
+    
     .orbiting-circle {
-        width: 200px;
-        height: 200px;
+        width: 180px;
+        height: 180px;
+        top: 45%;
+    }
+    
+    .glow-effect {
+        top: 45%;
+        width: 160px;
+        height: 160px;
+    }
+    
+    .orbiting-circle::after {
+        width: 140px;
+        height: 140px;
+    }
+    
+    .hero-visual::after {
+        width: 15px;
+        height: 15px;
+        right: 22%;
+        top: 42%;
     }
 }
 
 /* 修改夜间模式下的标题和副标题颜色 */
 body.dark-theme .hero-title {
-    background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0.9));
+    background: linear-gradient(to right, var(--text-color), rgba(255, 255, 255, 0.7));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 body.dark-theme .hero-subtitle {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 body.dark-theme .highlight-text {
-    background: linear-gradient(45deg, var(--dark-alive-color), #43cbff);
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 body.dark-theme .highlight-text::after {
-    background: linear-gradient(45deg, var(--dark-alive-color), #43cbff);
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+}
+
+/* 暗色主题下的旋转球体调整 */
+body.dark-theme .orbiting-circle {
+    box-shadow: none;
+}
+
+body.dark-theme .orbiting-circle::after {
+    border-color: var(--orbit-color);
+    opacity: 0.4;
 } 
