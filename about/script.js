@@ -6,116 +6,47 @@ document.getElementById('current-year').textContent = new Date().getFullYear();
 
 // 页面加载时执行
 document.addEventListener('DOMContentLoaded', () => {
+    // 初始化主题
+    initTheme();
+    
     // 初始化粒子背景
     initParticles();
     
     // 导航栏交互
     setupNavbar();
     
-    // About页初始化
-    initAboutPage();
+    // 生命计时器初始化
+    initLifeCounter();
     
-    // 为每个section添加淡入动画
-    animateSections();
-    
-    // 设置复制到剪贴板功能
-    setupClipboard();
+    // 初始化复制功能
+    initClipboard();
 });
 
-// About页初始化
-function initAboutPage() {
-    // 计算并显示生命计时器
-    updateLifeTimer();
+// 初始化主题
+function initTheme() {
+    // 获取保存的主题偏好
+    const savedTheme = localStorage.getItem('theme');
     
-    // 每小时更新一次计时器
-    setInterval(updateLifeTimer, 1000 * 60 * 60);
-}
-
-// 为section添加动画
-function animateSections() {
-    const sections = document.querySelectorAll('section');
-    
-    sections.forEach((section, index) => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(20px)';
-        section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        
-        // 错开时间显示，创建级联效果
-        setTimeout(() => {
-            section.style.opacity = '1';
-            section.style.transform = 'translateY(0)';
-        }, 300 * (index + 1));
-    });
-}
-
-// 计算生命时间函数
-function updateLifeTimer() {
-    const yearsEl = document.getElementById('years');
-    const daysEl = document.getElementById('days');
-    const hoursEl = document.getElementById('hours');
-    
-    if (!yearsEl || !daysEl || !hoursEl) return;
-    
-    const now = new Date();
-    
-    // 计算年份差异
-    let years = now.getFullYear() - birthDate.getFullYear();
-    
-    // 检查是否已经过了今年的生日
-    if (
-        now.getMonth() < birthDate.getMonth() || 
-        (now.getMonth() === birthDate.getMonth() && now.getDate() < birthDate.getDate())
-    ) {
-        years--;
+    // 如果存在保存的主题，应用它
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
     }
     
-    // 创建当前年份的生日日期用于计算剩余天数
-    const birthdayThisYear = new Date(now.getFullYear(), birthDate.getMonth(), birthDate.getDate());
-    
-    // 如果今年的生日已经过了，使用明年的生日日期
-    if (now > birthdayThisYear) {
-        birthdayThisYear.setFullYear(birthdayThisYear.getFullYear() + 1);
+    // 设置主题切换按钮
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            // 切换主题类
+            document.body.classList.toggle('dark-theme');
+            
+            // 保存主题偏好到localStorage
+            const isDarkTheme = document.body.classList.contains('dark-theme');
+            localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
+            
+            // 重新初始化粒子效果以适应新主题
+            initParticles();
+        });
     }
-    
-    // 计算自上次生日以来的总毫秒数
-    const lastBirthday = new Date(birthdayThisYear);
-    lastBirthday.setFullYear(lastBirthday.getFullYear() - 1);
-    
-    // 计算自上次生日到现在的时间差
-    const diff = now - lastBirthday;
-    
-    // 计算天数和小时
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    
-    // 更新DOM元素
-    yearsEl.textContent = years;
-    daysEl.textContent = days;
-    hoursEl.textContent = hours;
-    
-    // 添加数字变化的动画效果
-    animateValue(yearsEl, years);
-    animateValue(daysEl, days);
-    animateValue(hoursEl, hours);
-}
-
-// 为数字变化添加动画效果
-function animateValue(element, newValue) {
-    const currentValue = parseInt(element.getAttribute('data-value') || '0');
-    
-    // 如果值没有变化，不执行动画
-    if (currentValue === newValue) return;
-    
-    // 存储新值作为属性
-    element.setAttribute('data-value', newValue);
-    
-    // 添加缩放动画
-    element.style.transform = 'scale(1.2)';
-    element.style.transition = 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-    
-    setTimeout(() => {
-        element.style.transform = 'scale(1)';
-    }, 300);
 }
 
 // 设置导航栏交互
@@ -142,67 +73,79 @@ function setupNavbar() {
     // 在滚动时添加背景颜色渐变
     window.addEventListener('scroll', () => {
         const navbar = document.querySelector('.navbar');
+        const isDarkTheme = document.body.classList.contains('dark-theme');
+        
         if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(15, 15, 26, 0.9)';
-            navbar.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.2)';
+            if (isDarkTheme) {
+                navbar.style.background = 'rgba(15, 15, 26, 0.9)';
+                navbar.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.2)';
+            } else {
+                navbar.style.background = 'rgba(252, 241, 230, 0.9)';
+                navbar.style.boxShadow = '0 5px 20px rgba(226, 178, 148, 0.2)';
+            }
         } else {
-            navbar.style.background = 'rgba(15, 15, 26, 0.8)';
+            if (isDarkTheme) {
+                navbar.style.background = 'rgba(15, 15, 26, 0.8)';
+            } else {
+                navbar.style.background = 'rgba(252, 241, 230, 0.8)';
+            }
             navbar.style.boxShadow = 'none';
         }
     });
 }
 
-// 为复制到剪贴板功能进行设置
-function setupClipboard() {
-    const contactItems = document.querySelectorAll('.contact-item[data-clipboard]');
+// 获取当前主题的颜色值
+function getThemeColors() {
+    const isDarkTheme = document.body.classList.contains('dark-theme');
     
-    contactItems.forEach(item => {
-        item.addEventListener('click', async () => {
-            const textToCopy = item.getAttribute('data-clipboard');
-            
-            try {
-                await navigator.clipboard.writeText(textToCopy);
-                
-                // 添加复制成功的视觉反馈
-                item.classList.add('copied');
-                
-                // 2秒后移除复制成功的样式
-                setTimeout(() => {
-                    item.classList.remove('copied');
-                }, 2000);
-                
-                // 添加复制成功的反馈动画
-                const icon = item.querySelector('.icon i');
-                icon.style.transform = 'scale(1.3) rotate(10deg)';
-                setTimeout(() => {
-                    icon.style.transform = '';
-                }, 500);
-                
-            } catch (err) {
-                console.error('复制失败: ', err);
-            }
-        });
-    });
+    if (isDarkTheme) {
+        return {
+            particles: ['#6c63ff', '#ff6b95', '#43cbff', '#36f1cd'],
+            lines: '#6c63ff',
+            speed: 1.2,
+            particleCount: 80,
+            opacity: 0.6,
+            size: 3.5,
+            mode: 'grab',
+            lineOpacity: 0.15,
+            lineWidth: 0.8
+        };
+    } else {
+        return {
+            particles: ['#f5a88e', '#e8a5c1', '#f5d5c6', '#c17f91'],
+            lines: '#f5a88e',
+            speed: 0.8,
+            particleCount: 50,
+            opacity: 0.3,
+            size: 4,
+            mode: 'bubble',
+            lineOpacity: 0.2,
+            lineWidth: 1
+        };
+    }
 }
 
 // 初始化粒子背景
 function initParticles() {
     if (!window.particlesJS) return;
     
+    // 获取当前主题的颜色配置
+    const themeColors = getThemeColors();
+    
     particlesJS('particles-js', {
         particles: {
             number: {
-                value: 80,
+                value: themeColors.particleCount,
                 density: {
                     enable: true,
                     value_area: 800
                 }
             },
             color: {
-                value: ['#6c63ff', '#ff6b95', '#43cbff', '#36f1cd']
+                value: themeColors.particles
             },
             shape: {
-                type: 'circle',
+                type: ['circle', 'star'],
                 stroke: {
                     width: 0,
                     color: '#000000'
@@ -212,21 +155,21 @@ function initParticles() {
                 }
             },
             opacity: {
-                value: 0.5,
+                value: themeColors.opacity,
                 random: true,
                 anim: {
                     enable: true,
-                    speed: 1,
+                    speed: 0.5,
                     opacity_min: 0.1,
                     sync: false
                 }
             },
             size: {
-                value: 3,
+                value: themeColors.size,
                 random: true,
                 anim: {
                     enable: true,
-                    speed: 2,
+                    speed: 1,
                     size_min: 0.1,
                     sync: false
                 }
@@ -234,13 +177,13 @@ function initParticles() {
             line_linked: {
                 enable: true,
                 distance: 150,
-                color: '#6c63ff',
-                opacity: 0.2,
-                width: 1
+                color: themeColors.lines,
+                opacity: themeColors.lineOpacity,
+                width: themeColors.lineWidth
             },
             move: {
                 enable: true,
-                speed: 1,
+                speed: themeColors.speed,
                 direction: 'none',
                 random: true,
                 straight: false,
@@ -258,7 +201,7 @@ function initParticles() {
             events: {
                 onhover: {
                     enable: true,
-                    mode: 'grab'
+                    mode: themeColors.mode
                 },
                 onclick: {
                     enable: true,
@@ -273,11 +216,64 @@ function initParticles() {
                         opacity: 0.6
                     }
                 },
+                bubble: {
+                    distance: 150,
+                    size: 6,
+                    duration: 2,
+                    opacity: 0.5,
+                    speed: 3
+                },
                 push: {
-                    particles_nb: 4
+                    particles_nb: 3
                 }
             }
         },
         retina_detect: true
+    });
+}
+
+// 生命计时器初始化
+function initLifeCounter() {
+    const birthday = new Date('2004-03-19');
+    const yearsSpan = document.getElementById('years');
+    const daysSpan = document.getElementById('days');
+    const hoursSpan = document.getElementById('hours');
+    
+    function updateCounter() {
+        const now = new Date();
+        const diff = now - birthday;
+        const years = diff / (1000 * 60 * 60 * 24 * 365.25);
+        const days = (years - Math.floor(years)) * 365.25;
+        const hours = (days - Math.floor(days)) * 24;
+        
+        yearsSpan.textContent = Math.floor(years);
+        daysSpan.textContent = Math.floor(days);
+        hoursSpan.textContent = Math.floor(hours);
+        
+        setTimeout(updateCounter, 60000); // 每分钟更新一次
+    }
+    
+    updateCounter();
+}
+
+// 初始化复制功能
+function initClipboard() {
+    const clipboardItems = document.querySelectorAll('[data-clipboard]');
+    
+    clipboardItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const text = item.getAttribute('data-clipboard');
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    // 显示复制成功的提示
+                    const indicator = item.querySelector('.copy-indicator');
+                    if (indicator) {
+                        indicator.classList.add('active');
+                        setTimeout(() => {
+                            indicator.classList.remove('active');
+                        }, 2000);
+                    }
+                });
+        });
     });
 } 

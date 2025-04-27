@@ -6,21 +6,84 @@
 }
 
 :root {
-    --primary-color: #6c63ff;
-    --secondary-color: #ff6b95;
-    --tertiary-color: #43cbff;
-    --text-color: #f0f0f0;
+    /* 日间模式颜色（默认） */
+    --light-primary-color: #f5a88e;
+    --light-secondary-color: #e8a5c1;
+    --light-tertiary-color: #f5d5c6;
+    --light-text-color: #714e42;
+    --light-bg: #fcf1e6;
+    --light-card-bg: rgba(255, 247, 240, 0.7);
+    --light-shadow: 0 10px 30px rgba(226, 178, 148, 0.2);
+    --light-glow: 0 0 20px rgba(245, 168, 142, 0.5);
+    --light-alive-color: #c17f91;
+    --light-orbit-color: rgba(226, 178, 148, 0.2);
+    --light-nav-bg: rgba(252, 241, 230, 0.8);
+    --light-border-color: rgba(226, 178, 148, 0.2);
+    --light-orb-color: #ff8fb3;
+    --light-orb-glow: 0 0 25px rgba(255, 143, 179, 0.8);
+    --light-card-text: #4a3429;
+    --light-card-title: #3c2a22;
+    
+    /* 夜间模式颜色 */
+    --dark-primary-color: #6c63ff;
+    --dark-secondary-color: #ff6b95;
+    --dark-tertiary-color: #43cbff;
+    --dark-text-color: #f8f8ff;
     --dark-bg: #0f0f1a;
-    --card-bg: rgba(25, 25, 40, 0.7);
-    --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    --dark-card-bg: rgba(25, 25, 40, 0.7);
+    --dark-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    --dark-glow: 0 0 20px rgba(108, 99, 255, 0.5);
+    --dark-alive-color: #36f1cd;
+    --dark-orbit-color: rgba(108, 99, 255, 0.2);
+    --dark-nav-bg: rgba(15, 15, 26, 0.8);
+    --dark-border-color: rgba(255, 255, 255, 0.05);
+    --dark-orb-color: #43cbff;
+    --dark-orb-glow: 0 0 30px rgba(67, 203, 255, 0.9);
+    --dark-card-text: #f8f8ff;
+    --dark-card-title: #ffffff;
+    
+    /* 默认使用日间模式变量 */
+    --primary-color: var(--light-primary-color);
+    --secondary-color: var(--light-secondary-color);
+    --tertiary-color: var(--light-tertiary-color);
+    --text-color: var(--light-text-color);
+    --bg: var(--light-bg);
+    --card-bg: var(--light-card-bg);
+    --shadow: var(--light-shadow);
     --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    --glow: 0 0 20px rgba(108, 99, 255, 0.5);
-    --alive-color: #36f1cd;
-    --orbit-color: rgba(255, 255, 255, 0.1);
+    --glow: var(--light-glow);
+    --alive-color: var(--light-alive-color);
+    --orbit-color: var(--light-orbit-color);
+    --nav-bg: var(--light-nav-bg);
+    --border-color: var(--light-border-color);
+    --orb-color: var(--light-orb-color);
+    --orb-glow: var(--light-orb-glow);
+    --card-text: var(--light-card-text);
+    --card-title: var(--light-card-title);
+}
+
+/* 夜间模式样式 */
+body.dark-theme {
+    --primary-color: var(--dark-primary-color);
+    --secondary-color: var(--dark-secondary-color);
+    --tertiary-color: var(--dark-tertiary-color);
+    --text-color: var(--dark-text-color);
+    --bg: var(--dark-bg);
+    --card-bg: var(--dark-card-bg);
+    --shadow: var(--dark-shadow);
+    --glow: var(--dark-glow);
+    --alive-color: var(--dark-alive-color);
+    --orbit-color: var(--dark-orbit-color);
+    --nav-bg: var(--dark-nav-bg);
+    --border-color: var(--dark-border-color);
+    --orb-color: var(--dark-orb-color);
+    --orb-glow: var(--dark-orb-glow);
+    --card-text: var(--dark-card-text);
+    --card-title: var(--dark-card-title);
 }
 
 body {
-    background: var(--dark-bg);
+    background: var(--bg);
     color: var(--text-color);
     line-height: 1.6;
     min-height: 100vh;
@@ -44,11 +107,11 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    background: rgba(15, 15, 26, 0.8);
+    background: var(--nav-bg);
     backdrop-filter: blur(10px);
     z-index: 1000;
     padding: 0.8rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .nav-container {
@@ -152,17 +215,28 @@ body {
 .page-title {
     font-size: 3rem;
     font-weight: 700;
-    background: linear-gradient(45deg, #fff, rgba(255, 255, 255, 0.8));
+    background: linear-gradient(45deg, var(--text-color), rgba(113, 78, 66, 0.8));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 1rem;
 }
 
+body.dark-theme .page-title {
+    background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0.9));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .page-subtitle {
     font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(113, 78, 66, 0.7);
     letter-spacing: 1px;
+}
+
+body.dark-theme .page-subtitle {
+    color: rgba(255, 255, 255, 0.8);
 }
 
 /* 项目时间线样式 */
@@ -224,8 +298,9 @@ body {
     bottom: 0;
     left: 50%;
     width: 2px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--orbit-color);
     transform: translateX(-50%);
+    z-index: 1;
 }
 
 .timeline-item {
@@ -236,56 +311,67 @@ body {
 
 .timeline-item:nth-child(odd) .timeline-content {
     margin-left: auto;
-    padding-left: 3rem;
-    left: 40%;
+    padding-left: 2rem;
+    left: 30%;
+    margin-right: 1.5rem;
 }
 
 .timeline-item:nth-child(even) .timeline-content {
-    padding-right: 3rem;
-    right: 40%;
+    padding-right: 2rem;
+    right: 30%;
+    margin-left: 1.5rem;
 }
 
 .timeline-dot {
     position: absolute;
-    top: 0;
-    left: 50%;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     background: var(--primary-color);
     border-radius: 50%;
-    transform: translateX(-50%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 2;
-    box-shadow: 0 0 10px var(--primary-color);
+    box-shadow: 0 0 10px var(--glow);
+    transition: all 0.3s ease-in-out;
+}
+
+.timeline-item:hover .timeline-dot {
+    transform: translate(-50%, -50%) scale(1.2);
+    box-shadow: 0 0 15px var(--glow);
 }
 
 .timeline-date {
     position: absolute;
-    top: 0;
-    width: 100px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 120px;
     text-align: center;
     font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.7);
     font-weight: 500;
+    line-height: 1.4;
 }
 
 .timeline-item:nth-child(odd) .timeline-date {
     right: 52%;
+    text-align: right;
 }
 
 .timeline-item:nth-child(even) .timeline-date {
     left: 52%;
+    text-align: left;
 }
 
 .timeline-content {
-    position: relative;
-    width: 55%;
-    background: rgba(30, 30, 50, 0.7);
-    border-radius: 1rem;
-    padding: 2rem;
+    background: var(--card-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+    width: 45%;
     box-shadow: var(--shadow);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: transform 0.3s ease;
+    position: relative;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(15px);
 }
 
 .timeline-content:hover {
@@ -296,12 +382,12 @@ body {
 .timeline-content h3 {
     font-size: 1.3rem;
     margin-bottom: 1rem;
-    color: #fff;
+    color: var(--card-title);
 }
 
 .timeline-content p {
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--card-text);
     margin-bottom: 1.5rem;
 }
 
@@ -314,29 +400,34 @@ body {
 .tag {
     display: inline-block;
     padding: 0.3rem 0.8rem;
-    border-radius: 50px;
+    background: rgba(108, 99, 255, 0.1);
+    border-radius: 20px;
     font-size: 0.8rem;
-    background: rgba(108, 99, 255, 0.2);
+    font-weight: 500;
+    margin-right: 0.5rem;
     color: var(--primary-color);
 }
 
+body:not(.dark-theme) .tag {
+    color: #4a3429;
+    background: rgba(226, 178, 148, 0.2);
+}
+
 .tag-special {
-    background: rgba(54, 241, 205, 0.2);
+    background: rgba(54, 241, 205, 0.1);
     color: var(--alive-color);
 }
 
 .timeline-item-special .timeline-dot {
     background: var(--alive-color);
-    box-shadow: 0 0 10px var(--alive-color);
-    width: 20px;
-    height: 20px;
+    box-shadow: 0 0 15px var(--alive-color);
 }
 
 footer {
     text-align: center;
     margin-top: 3rem;
     padding: 1.5rem 0;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-color);
     font-size: 0.9rem;
     position: relative;
 }
@@ -372,8 +463,9 @@ footer::before {
     
     .timeline-item:nth-child(odd) .timeline-content,
     .timeline-item:nth-child(even) .timeline-content {
-        width: calc(100% - 60px);
-        margin-left: 60px;
+        width: calc(100% - 80px);
+        margin-left: 80px;
+        margin-right: 0;
         padding-left: 1.5rem;
         padding-right: 1.5rem;
         left: 0;
@@ -390,6 +482,7 @@ footer::before {
         left: 80px;
         right: auto;
         text-align: left;
+        transform: none;
     }
 }
 
@@ -399,13 +492,14 @@ footer::before {
         top: 0;
         left: -100%;
         flex-direction: column;
-        background: rgba(15, 15, 26, 0.95);
+        background: var(--nav-bg);
         backdrop-filter: blur(10px);
         width: 80%;
         height: 100vh;
         padding-top: 5rem;
         transition: left 0.3s ease;
         z-index: 900;
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
     }
     
     .nav-menu.active {
@@ -438,6 +532,14 @@ footer::before {
     .page-title {
         font-size: 2.5rem;
     }
+    
+    .theme-toggle-icon {
+        font-size: 1.3rem;
+    }
+    
+    body.dark-theme .nav-menu {
+        box-shadow: 5px 0 25px rgba(0, 0, 0, 0.3);
+    }
 }
 
 @media (max-width: 480px) {
@@ -459,5 +561,107 @@ footer::before {
     
     .timeline-content p {
         font-size: 0.9rem;
+    }
+}
+
+body:not(.dark-theme) .timeline-content h3 {
+    color: #3c2a22;
+}
+
+body:not(.dark-theme) .timeline-content p {
+    color: #4a3429;
+}
+
+body:not(.dark-theme) .timeline-date {
+    color: rgba(74, 52, 41, 0.8);
+}
+
+body:not(.dark-theme) .page-title {
+    color: #3c2a22;
+}
+
+body:not(.dark-theme) .page-subtitle {
+    color: #4a3429;
+}
+
+/* 增强的项目样式 - 应用到所有时间线项目 */
+.enhanced-project .timeline-content {
+    border-left: 3px solid var(--primary-color);
+    transition: all 0.4s ease;
+}
+
+.enhanced-project:nth-child(even) .timeline-content {
+    border-left: none;
+    border-right: 3px solid var(--primary-color);
+}
+
+.enhanced-project .timeline-dot {
+    background: var(--primary-color);
+    box-shadow: 0 0 12px var(--glow);
+}
+
+.enhanced-project .tag {
+    background: rgba(var(--primary-color-rgb, 108, 99, 255), 0.15);
+    color: var(--primary-color);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+body:not(.dark-theme) .enhanced-project .tag {
+    background: rgba(245, 168, 142, 0.25);
+    color: #3c2a22;
+}
+
+.enhanced-project .timeline-content:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* 保留特殊项目的样式 */
+.timeline-item-special.enhanced-project .timeline-dot {
+    background: var(--alive-color);
+    box-shadow: 0 0 15px var(--alive-color);
+}
+
+.timeline-item-special.enhanced-project .tag-special {
+    background: rgba(54, 241, 205, 0.1);
+    color: var(--alive-color);
+}
+
+@media (max-width: 992px) {
+    .timeline::before {
+        left: 30px;
+    }
+    
+    .timeline-item:nth-child(odd) .timeline-content,
+    .timeline-item:nth-child(even) .timeline-content {
+        width: calc(100% - 80px);
+        margin-left: 80px;
+        margin-right: 0;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        left: 0;
+        right: 0;
+    }
+    
+    .timeline-dot {
+        left: 30px;
+    }
+    
+    .timeline-item:nth-child(odd) .timeline-date,
+    .timeline-item:nth-child(even) .timeline-date {
+        top: -30px;
+        left: 80px;
+        right: auto;
+        text-align: left;
+        transform: none;
+    }
+    
+    .enhanced-project .timeline-content {
+        border-left: 3px solid var(--primary-color);
+        border-right: none;
+        width: calc(100% - 60px) !important;
+        left: 0 !important;
+        right: 0 !important;
     }
 } 

@@ -11,6 +11,83 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .moon-cat-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-text {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        .dreamer-text {
+            display: block;
+            font-size: 0.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.8;
+            margin-top: 2px;
+            color: var(--text-color);
+            -webkit-text-fill-color: var(--text-color);
+        }
+        
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            margin-left: 2rem;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .theme-toggle-icon {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle-switch {
+            position: relative;
+            width: 45px;
+            height: 22px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 25px;
+            margin: 0 10px;
+            padding: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-theme .theme-toggle-switch::after {
+            left: calc(100% - 20px);
+        }
+        
+        @media (max-width: 768px) {
+            .theme-toggle {
+                margin: 1.5rem auto;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="particles-container" id="particles-js"></div>
@@ -18,7 +95,17 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <a href="../index/index.html">ZeroNight</a>
+                <svg class="moon-cat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                    <path d="M50,20 A30,30 0 1,0 80,50 A20,30 0 0,1 50,20" fill="#f5a88e" stroke="#c17f91" stroke-width="2" />
+                    <circle cx="65" cy="40" r="2" fill="#714e42" />
+                    <circle cx="75" cy="50" r="2" fill="#714e42" />
+                    <path d="M67,55 Q70,58 73,55" fill="none" stroke="#714e42" stroke-width="2" stroke-linecap="round" />
+                    <path d="M55,35 L60,30 M80,45 L85,42" stroke="#c17f91" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                <div>
+                    <a href="../index/index.html" class="logo-text">ZeroNight</a>
+                    <span class="dreamer-text">developer • creator • dreamer</span>
+                </div>
             </div>
             <div class="nav-toggle" id="navToggle">
                 <span></span>
@@ -29,6 +116,11 @@
                 <li class="nav-item"><a href="../index/index.html">Home</a></li>
                 <li class="nav-item"><a href="../projects/projects.html">Projects</a></li>
                 <li class="nav-item active"><a href="../about/about.html">About</a></li>
+                <li class="nav-item theme-toggle" id="themeToggle">
+                    <i class="fas fa-sun theme-toggle-icon"></i>
+                    <div class="theme-toggle-switch"></div>
+                    <i class="fas fa-moon theme-toggle-icon"></i>
+                </li>
             </ul>
         </div>
     </nav>
@@ -40,13 +132,28 @@
         </header>
 
         <section class="about-intro">
-            <div class="about-card">
-                <div class="about-content">
-                    <h2>ZeroNight</h2>
-                    <p class="about-tagline">Developer, Creator, Dreamer</p>
-                    <p class="about-text">
-                        Welcome to my digital space. I'm passionate about creating innovative solutions and bringing ideas to life through code.
-                    </p>
+            <div class="envelope-container">
+                <div class="envelope">
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-front">
+                        <div class="envelope-seal">
+                            <div class="seal-pattern"><i class="fas fa-crown"></i></div>
+                            <span>♥</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-card letter-content">
+                    <div class="about-content">
+                        <h2>Dear Baby</h2>
+                        <p class="about-greeting">Hello there!</p>
+                        <div class="about-letter">
+                            <p>Welcome to my digital sanctuary. I am <span class="about-name">ZeroNight</span>, a dreamer who finds poetry in lines of code and beauty in digital creation.</p>
+                            <p>I've always believed that code is not merely a tool, but rather an art form—a delicate medium through which thoughts and emotions can be woven into reality. Through programming, I transform whispers of imagination into tangible digital experiences that touch hearts and minds.</p>
+                            <p>As a developer, I am drawn to the gentle frontiers of technology, solving puzzles with grace while embracing the ever-flowing river of knowledge. In this swiftly evolving digital era, nurturing curiosity and passion remains the most precious virtue.</p>
+                            <p>Whether you've wandered here by chance or sought this place with purpose, I hope you find something that resonates within these digital pages—perhaps a moment of wonder or a spark of inspiration.</p>
+                            <p class="about-signature">Warmly yours,<br>ZeroNight</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -115,5 +222,61 @@
     
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="script.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 信封打开效果
+        const envelope = document.querySelector('.envelope');
+        const envelopeSeal = document.querySelector('.envelope-seal');
+        const envelopeContainer = document.querySelector('.envelope-container');
+        
+        // 获取信封和信的尺寸
+        const letterContent = document.querySelector('.letter-content');
+        
+        // 调整信封大小以匹配信的高度
+        function adjustEnvelopeSize() {
+            const letterHeight = letterContent.offsetHeight;
+            envelope.style.height = letterHeight + 'px';
+        }
+        
+        // 页面加载后和窗口大小改变时调整信封大小
+        window.addEventListener('load', adjustEnvelopeSize);
+        window.addEventListener('resize', adjustEnvelopeSize);
+        
+        // 点击信封打开
+        function openEnvelope() {
+            envelopeContainer.classList.add('open');
+        }
+        
+        envelope.addEventListener('click', openEnvelope);
+        envelopeSeal.addEventListener('click', openEnvelope);
+        
+        // 初始化复制功能
+        initClipboard();
+        
+        // 复制功能实现
+        function initClipboard() {
+            const clipboardItems = document.querySelectorAll('[data-clipboard]');
+            
+            clipboardItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const text = item.getAttribute('data-clipboard');
+                    navigator.clipboard.writeText(text)
+                        .then(() => {
+                            // 添加复制成功的样式
+                            item.classList.add('copied');
+                            
+                            // 2秒后移除样式
+                            setTimeout(() => {
+                                item.classList.remove('copied');
+                            }, 2000);
+                        })
+                        .catch(err => {
+                            console.error('复制失败:', err);
+                        });
+                });
+            });
+        }
+    });
+    </script>
 </body>
 </html> 

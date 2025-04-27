@@ -3,6 +3,9 @@ document.getElementById('current-year').textContent = new Date().getFullYear();
 
 // 页面加载时执行
 document.addEventListener('DOMContentLoaded', () => {
+    // 初始化主题
+    initTheme();
+    
     // 初始化粒子背景
     initParticles();
     
@@ -15,6 +18,33 @@ document.addEventListener('DOMContentLoaded', () => {
     // 为每个section添加淡入动画
     animateSections();
 });
+
+// 初始化主题
+function initTheme() {
+    // 获取保存的主题偏好
+    const savedTheme = localStorage.getItem('theme');
+    
+    // 如果存在保存的主题，应用它
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+    }
+    
+    // 设置主题切换按钮
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            // 切换主题类
+            document.body.classList.toggle('dark-theme');
+            
+            // 保存主题偏好到localStorage
+            const isDarkTheme = document.body.classList.contains('dark-theme');
+            localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
+            
+            // 重新初始化粒子效果以适应新主题
+            initParticles();
+        });
+    }
+}
 
 // 首页初始化
 function initHomePage() {
@@ -68,34 +98,79 @@ function setupNavbar() {
     // 在滚动时添加背景颜色渐变
     window.addEventListener('scroll', () => {
         const navbar = document.querySelector('.navbar');
+        const isDarkTheme = document.body.classList.contains('dark-theme');
+        
         if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(15, 15, 26, 0.9)';
-            navbar.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.2)';
+            if (isDarkTheme) {
+                navbar.style.background = 'rgba(15, 15, 26, 0.9)';
+                navbar.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.2)';
+            } else {
+                navbar.style.background = 'rgba(252, 241, 230, 0.9)';
+                navbar.style.boxShadow = '0 5px 20px rgba(226, 178, 148, 0.2)';
+            }
         } else {
-            navbar.style.background = 'rgba(15, 15, 26, 0.8)';
+            if (isDarkTheme) {
+                navbar.style.background = 'rgba(15, 15, 26, 0.8)';
+            } else {
+                navbar.style.background = 'rgba(252, 241, 230, 0.8)';
+            }
             navbar.style.boxShadow = 'none';
         }
     });
+}
+
+// 获取当前主题的颜色值
+function getThemeColors() {
+    const isDarkTheme = document.body.classList.contains('dark-theme');
+    
+    if (isDarkTheme) {
+        return {
+            particles: ['#6c63ff', '#ff6b95', '#43cbff', '#36f1cd'],
+            lines: '#6c63ff',
+            speed: 1.2,
+            particleCount: 80,
+            opacity: 0.6,
+            size: 3.5,
+            mode: 'grab',
+            lineOpacity: 0.15,
+            lineWidth: 0.8
+        };
+    } else {
+        return {
+            particles: ['#f5a88e', '#e8a5c1', '#f5d5c6', '#c17f91'],
+            lines: '#f5a88e',
+            speed: 0.8,
+            particleCount: 50,
+            opacity: 0.3,
+            size: 4,
+            mode: 'bubble',
+            lineOpacity: 0.2,
+            lineWidth: 1
+        };
+    }
 }
 
 // 初始化粒子背景
 function initParticles() {
     if (!window.particlesJS) return;
     
+    // 获取当前主题的颜色配置
+    const themeColors = getThemeColors();
+    
     particlesJS('particles-js', {
         particles: {
             number: {
-                value: 80,
+                value: themeColors.particleCount,
                 density: {
                     enable: true,
                     value_area: 800
                 }
             },
             color: {
-                value: ['#6c63ff', '#ff6b95', '#43cbff', '#36f1cd']
+                value: themeColors.particles
             },
             shape: {
-                type: 'circle',
+                type: ['circle', 'star'],
                 stroke: {
                     width: 0,
                     color: '#000000'
@@ -105,21 +180,21 @@ function initParticles() {
                 }
             },
             opacity: {
-                value: 0.5,
+                value: themeColors.opacity,
                 random: true,
                 anim: {
                     enable: true,
-                    speed: 1,
+                    speed: 0.5,
                     opacity_min: 0.1,
                     sync: false
                 }
             },
             size: {
-                value: 3,
+                value: themeColors.size,
                 random: true,
                 anim: {
                     enable: true,
-                    speed: 2,
+                    speed: 1,
                     size_min: 0.1,
                     sync: false
                 }
@@ -127,13 +202,13 @@ function initParticles() {
             line_linked: {
                 enable: true,
                 distance: 150,
-                color: '#6c63ff',
-                opacity: 0.2,
-                width: 1
+                color: themeColors.lines,
+                opacity: themeColors.lineOpacity,
+                width: themeColors.lineWidth
             },
             move: {
                 enable: true,
-                speed: 1,
+                speed: themeColors.speed,
                 direction: 'none',
                 random: true,
                 straight: false,
@@ -151,7 +226,7 @@ function initParticles() {
             events: {
                 onhover: {
                     enable: true,
-                    mode: 'grab'
+                    mode: themeColors.mode
                 },
                 onclick: {
                     enable: true,
@@ -166,8 +241,15 @@ function initParticles() {
                         opacity: 0.6
                     }
                 },
+                bubble: {
+                    distance: 150,
+                    size: 6,
+                    duration: 2,
+                    opacity: 0.5,
+                    speed: 3
+                },
                 push: {
-                    particles_nb: 4
+                    particles_nb: 3
                 }
             }
         },
