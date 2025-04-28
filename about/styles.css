@@ -1087,6 +1087,7 @@ footer::before {
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     transform-style: preserve-3d;
+    transform: rotate(180deg);
     transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 100;
     overflow: hidden;
@@ -1150,7 +1151,8 @@ body.dark-theme .envelope-flap {
     position: relative;
     overflow: hidden;
     border: 2px solid rgba(255, 255, 255, 0.1);
-    margin-top: -22px;
+    margin-top: -35px;
+    transform: rotate(180deg);
 }
 
 body.dark-theme .envelope-seal {
@@ -1230,7 +1232,7 @@ body.dark-theme .envelope-seal {
 
 .envelope-container.open .envelope-seal {
     opacity: 0;
-    transform: scale(0.5) rotate(20deg);
+    transform: scale(0.5) rotate(200deg);
 }
 
 .envelope-container.open .letter-content {
