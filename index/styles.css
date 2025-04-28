@@ -695,4 +695,56 @@ body.dark-theme .orbiting-circle {
 body.dark-theme .orbiting-circle::after {
     border-color: var(--orbit-color);
     opacity: 0.4;
-} 
+}
+
+/* 轨道内的月亮猫图片样式 */
+.moon-cat {
+    position: absolute; 
+    width: 522px;
+    height: 522px;
+    top: 50%;
+    left: 50%;
+    transform: translate(calc(-50% - 10px), calc(-50% + 2px));
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    /* 反向旋转抵消父元素的旋转，使猫看起来保持静止 */
+    animation: counter-rotate 20s linear infinite;
+    border-radius: 50%;
+}
+
+/* 反向旋转动画，速度和方向与orbiting-circle相反 */
+@keyframes counter-rotate {
+    0% { transform: translate(calc(-50% - 10px), calc(-50% + 2px)) rotate(0deg); }
+    100% { transform: translate(calc(-50% - 10px), calc(-50% + 2px)) rotate(-360deg); }
+}
+
+/* 旋转状态类 */
+.moon-cat.rotating {
+    /* 停止反向旋转，开始正向旋转 */
+    animation: rotate-cat 15s linear infinite;
+}
+
+@keyframes rotate-cat {
+    0% { transform: translate(calc(-50% - 10px), calc(-50% + 2px)) rotate(0deg); }
+    100% { transform: translate(calc(-50% - 10px), calc(-50% + 2px)) rotate(360deg); }
+}
+
+.moon-cat img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    pointer-events: none; /* 确保事件穿透到父元素 */
+    transition: filter 0.5s ease;
+    /* 白天模式下的色调调整 - 更温柔的效果 */
+    filter: sepia(10%) hue-rotate(-5deg) saturate(1.1) brightness(1.03) drop-shadow(0 0 8px rgba(245, 168, 142, 0.3));
+}
+
+/* 黑夜模式下月亮猫图片的颜色调整 - 更温柔的效果 */
+body.dark-theme .moon-cat img {
+    filter: sepia(15%) hue-rotate(160deg) saturate(1.1) brightness(0.95) drop-shadow(0 0 10px rgba(108, 99, 255, 0.4));
+}

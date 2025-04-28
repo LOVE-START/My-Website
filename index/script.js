@@ -17,7 +17,20 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 为每个section添加淡入动画
     animateSections();
+    
+    // 月亮猫点击旋转交互
+    setupMoonCatInteraction();
 });
+
+// 月亮猫点击旋转交互
+function setupMoonCatInteraction() {
+    const moonCat = document.querySelector('.moon-cat');
+    if (moonCat) {
+        moonCat.addEventListener('click', function() {
+            this.classList.toggle('rotating');
+        });
+    }
+}
 
 // 初始化主题
 function initTheme() {
