@@ -20,14 +20,37 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 月亮猫点击旋转交互
     setupMoonCatInteraction();
+    
+    // 添加星星背景
+    createStars();
 });
 
 // 月亮猫点击旋转交互
 function setupMoonCatInteraction() {
     const moonCat = document.querySelector('.moon-cat');
     if (moonCat) {
+        // 默认不添加旋转状态，让猫猫保持浮动状态
+        // moonCat.classList.add('rotating');
+        
         moonCat.addEventListener('click', function() {
-            this.classList.toggle('rotating');
+            // 点击时切换旋转和浮动状态
+            if (this.classList.contains('rotating')) {
+                this.classList.remove('rotating');
+                this.style.animation = 'enhanced-float 6s ease-in-out infinite';
+            } else {
+                this.classList.add('rotating');
+                this.style.animation = 'rotate-in-place 15s linear infinite';
+            }
+            
+            // 添加点击时的波纹效果
+            const ripple = document.createElement('div');
+            ripple.classList.add('moon-cat-ripple');
+            this.appendChild(ripple);
+            
+            // 定时移除波纹效果
+            setTimeout(() => {
+                ripple.remove();
+            }, 1000);
         });
     }
 }
@@ -268,4 +291,32 @@ function initParticles() {
         },
         retina_detect: true
     });
+}
+
+// 创建星星效果
+function createStars() {
+    const heroVisual = document.querySelector('.hero-visual');
+    if (!heroVisual) return;
+    
+    // 创建15-20颗星星
+    const starsCount = Math.floor(Math.random() * 6) + 15;
+    
+    for (let i = 0; i < starsCount; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        
+        // 随机位置
+        const posX = Math.floor(Math.random() * 100);
+        const posY = Math.floor(Math.random() * 100);
+        
+        star.style.left = `${posX}%`;
+        star.style.top = `${posY}%`;
+        
+        // 随机大小
+        const size = Math.random() * 3 + 1;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        
+        heroVisual.appendChild(star);
+    }
 } 

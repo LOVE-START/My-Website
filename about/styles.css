@@ -1277,4 +1277,228 @@ body.dark-theme .envelope-seal {
     visibility: hidden;
     position: relative;
     z-index: 1;
+}
+
+/* 悬浮装饰元素 */
+.floating-decoration {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    animation: float 6s ease-in-out infinite;
+    opacity: 0.8;
+}
+
+.stars-decoration {
+    width: 25px;
+    height: 25px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,2 L15,8 L21,9 L16.5,14 L18,20 L12,17 L6,20 L7.5,14 L3,9 L9,8 Z" fill="%23f5a88e" stroke="%23c17f91" stroke-width="0.5" /></svg>');
+    background-repeat: no-repeat;
+    top: 23%;
+    right: 32%;
+    transform: rotate(15deg);
+    animation: twinkle 4s ease-in-out infinite;
+}
+
+.stars-small {
+    width: 15px;
+    height: 15px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,2 L15,8 L21,9 L16.5,14 L18,20 L12,17 L6,20 L7.5,14 L3,9 L9,8 Z" fill="%23f5a88e" stroke="%23c17f91" stroke-width="0.5" /></svg>');
+    background-repeat: no-repeat;
+    top: 45%;
+    left: 32%;
+    transform: rotate(45deg);
+    animation: twinkle 3s ease-in-out infinite;
+    animation-delay: 0.5s;
+}
+
+.stars-tiny {
+    width: 10px;
+    height: 10px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,2 L15,8 L21,9 L16.5,14 L18,20 L12,17 L6,20 L7.5,14 L3,9 L9,8 Z" fill="%23f5a88e" stroke="%23c17f91" stroke-width="0.5" /></svg>');
+    background-repeat: no-repeat;
+    top: 17%;
+    left: 22%;
+    transform: rotate(30deg);
+    animation: twinkle 5s ease-in-out infinite;
+    animation-delay: 1.5s;
+}
+
+.stars-medium {
+    width: 20px;
+    height: 20px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,2 L15,8 L21,9 L16.5,14 L18,20 L12,17 L6,20 L7.5,14 L3,9 L9,8 Z" fill="%23f5a88e" stroke="%23c17f91" stroke-width="0.5" /></svg>');
+    background-repeat: no-repeat;
+    bottom: 18%;
+    left: 28%;
+    transform: rotate(60deg);
+    animation: twinkle 6s ease-in-out infinite;
+    animation-delay: 2s;
+}
+
+.stars-tiny-2 {
+    width: 12px;
+    height: 12px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,2 L15,8 L21,9 L16.5,14 L18,20 L12,17 L6,20 L7.5,14 L3,9 L9,8 Z" fill="%23f5a88e" stroke="%23c17f91" stroke-width="0.5" /></svg>');
+    background-repeat: no-repeat;
+    top: 38%;
+    right: 18%;
+    transform: rotate(20deg);
+    animation: twinkle 4.5s ease-in-out infinite;
+    animation-delay: 1.2s;
+}
+
+.stars-small-2 {
+    width: 16px;
+    height: 16px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,2 L15,8 L21,9 L16.5,14 L18,20 L12,17 L6,20 L7.5,14 L3,9 L9,8 Z" fill="%23f5a88e" stroke="%23c17f91" stroke-width="0.5" /></svg>');
+    background-repeat: no-repeat;
+    bottom: 28%;
+    right: 24%;
+    transform: rotate(75deg);
+    animation: twinkle 5.5s ease-in-out infinite;
+    animation-delay: 3s;
+}
+
+/* 页脚装饰 */
+.footer-decoration {
+    width: 100%;
+    height: 40px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.8;
+}
+
+.footer-cat {
+    width: 30px;
+    height: 30px;
+    margin: 0 10px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,20 A30,30 0 1,0 80,50 A20,30 0 0,1 50,20" fill="%23f5a88e" stroke="%23c17f91" stroke-width="2" /><circle cx="65" cy="40" r="2" fill="%23714e42" /><circle cx="75" cy="50" r="2" fill="%23714e42" /><path d="M67,55 Q70,58 73,55" fill="none" stroke="%23714e42" stroke-width="2" stroke-linecap="round" /><path d="M55,35 L60,30 M80,45 L85,42" stroke="%23c17f91" stroke-width="2" stroke-linecap="round" /></svg>');
+    background-repeat: no-repeat;
+    animation: gentle-bounce 2s ease-in-out infinite;
+}
+
+.footer-star {
+    width: 15px;
+    height: 15px;
+    margin: 0 8px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,2 L15,8 L21,9 L16.5,14 L18,20 L12,17 L6,20 L7.5,14 L3,9 L9,8 Z" fill="%23f5a88e" stroke="%23c17f91" stroke-width="0.5" /></svg>');
+    background-repeat: no-repeat;
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+/* 动画效果 */
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(5deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.5;
+        transform: scale(1) rotate(15deg);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2) rotate(25deg);
+    }
+}
+
+@keyframes gentle-bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* 暖色背景装饰 */
+.warm-glow {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245, 168, 142, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.warm-glow.top-left {
+    top: -100px;
+    left: -100px;
+}
+
+.warm-glow.bottom-right {
+    bottom: -100px;
+    right: -100px;
+}
+
+/* 为关于页面添加温暖细节 */
+.about-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.about-card::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 40px;
+    height: 40px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,2 L15,8 L21,9 L16.5,14 L18,20 L12,17 L6,20 L7.5,14 L3,9 L9,8 Z" fill="%23f5a88e" stroke="%23c17f91" stroke-width="0.5" /></svg>');
+    background-repeat: no-repeat;
+    opacity: 0.3;
+    transform: rotate(15deg);
+}
+
+.about-name {
+    position: relative;
+    display: inline-block;
+}
+
+.about-name::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #f5a88e, transparent);
+}
+
+.cosmos-container {
+    position: relative;
+}
+
+.cosmos-container::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,20 A30,30 0 1,0 80,50 A20,30 0 0,1 50,20" fill="%23f5a88e" stroke="%23c17f91" stroke-width="2" /></svg>');
+    background-repeat: no-repeat;
+    top: 10px;
+    right: 10%;
+    animation: gentle-bounce 3s ease-in-out infinite;
+}
+
+/* 小屏幕调整 */
+@media (max-width: 768px) {
+    .floating-decoration {
+        display: none;
+    }
+    
+    .footer-decoration {
+        height: 30px;
+    }
 } 
