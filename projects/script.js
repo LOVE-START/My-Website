@@ -40,10 +40,33 @@ function initTheme() {
             const isDarkTheme = document.body.classList.contains('dark-theme');
             localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
             
+            // 更新Special标签的颜色
+            updateSpecialTagColors();
+            
             // 重新初始化粒子效果以适应新主题
             initParticles();
         });
     }
+}
+
+// 更新Special标签颜色
+function updateSpecialTagColors() {
+    const specialTags = document.querySelectorAll('.tag-special');
+    const isDarkTheme = document.body.classList.contains('dark-theme');
+    
+    specialTags.forEach(tag => {
+        if (isDarkTheme) {
+            // 夜间模式使用绿色
+            tag.style.background = "rgba(54, 241, 205, 0.1)";
+            tag.style.color = "#36f1cd"; // 绿色
+            tag.style.borderBottom = "2px solid #36f1cd";
+        } else {
+            // 日间模式使用金色
+            tag.style.background = "rgba(255, 215, 0, 0.15)";
+            tag.style.color = "#d4af37"; // 金色
+            tag.style.borderBottom = "2px solid #d4af37";
+        }
+    });
 }
 
 // 项目页初始化
@@ -75,34 +98,101 @@ function animateTimelineItems() {
     const timelineItems = document.querySelectorAll('.timeline-item');
     
     timelineItems.forEach((item, index) => {
+        // 初始样式
         item.style.opacity = '0';
-        item.style.transform = 'translateY(30px)';
-        item.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        item.style.transform = index % 2 === 0 ? 'translateX(-30px)' : 'translateX(30px)';
+        item.style.transition = 'opacity 0.8s ease, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
         
         // 错开时间显示，创建级联效果
         setTimeout(() => {
             item.style.opacity = '1';
-            item.style.transform = 'translateY(0)';
-        }, 200 * (index + 1));
+            item.style.transform = 'translateX(0)';
+        }, 300 * (index + 1));
     });
+    
+    // 时间线本身的动画
+    const timeline = document.querySelector('.timeline');
+    if (timeline) {
+        // 时间线逐渐出现的效果
+        timeline.style.opacity = '0';
+        timeline.style.transition = 'opacity 1.5s ease';
+        
+        setTimeout(() => {
+            timeline.style.opacity = '1';
+            
+            // 添加时间线的脉动效果
+            const timelineBefore = document.createElement('style');
+            timelineBefore.innerHTML = `
+                @keyframes timelinePulse {
+                    0% { opacity: 0.3; }
+                    50% { opacity: 0.7; }
+                    100% { opacity: 0.3; }
+                }
+                
+                .timeline::before {
+                    animation: timelinePulse 5s infinite ease-in-out;
+                }
+            `;
+            document.head.appendChild(timelineBefore);
+        }, 500);
+    }
     
     // 添加时间线点的脉动效果
     const timelineDots = document.querySelectorAll('.timeline-dot');
-    timelineDots.forEach((dot) => {
-        // 为特殊时间点添加脉动效果
+    timelineDots.forEach((dot, index) => {
+        // 让普通点也有微弱脉动
+        dot.animate([
+            { boxShadow: '0 0 8px var(--glow)' },
+            { boxShadow: '0 0 12px var(--glow)' },
+            { boxShadow: '0 0 8px var(--glow)' }
+        ], {
+            duration: 3000 + (index * 500), // 错开每个点的动画时间
+            iterations: Infinity,
+            delay: index * 200 // 错开动画开始时间
+        });
+        
+        // 为特殊时间点添加更明显的脉动效果
         if (dot.parentElement.classList.contains('timeline-item-special')) {
-            setInterval(() => {
-                dot.animate([
-                    { boxShadow: '0 0 10px var(--alive-color)' },
-                    { boxShadow: '0 0 20px var(--alive-color)' },
-                    { boxShadow: '0 0 10px var(--alive-color)' }
-                ], {
-                    duration: 2000,
-                    iterations: Infinity
-                });
-            }, 100);
+            dot.animate([
+                { boxShadow: '0 0 15px var(--alive-color)', transform: 'translate(-50%, -50%) scale(1)' },
+                { boxShadow: '0 0 25px var(--alive-color)', transform: 'translate(-50%, -50%) scale(1.2)' },
+                { boxShadow: '0 0 15px var(--alive-color)', transform: 'translate(-50%, -50%) scale(1)' }
+            ], {
+                duration: 2500,
+                iterations: Infinity,
+                easing: 'cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+            });
         }
     });
+    
+    // 为当前日期添加特殊效果
+    const currentDate = document.querySelector('.current-date');
+    if (currentDate) {
+        const dateMarker = currentDate.querySelector('.date-marker');
+        const dateContent = currentDate.querySelector('.date-content');
+        
+        if (dateMarker) {
+            dateMarker.animate([
+                { transform: 'scale(1)', boxShadow: '0 0 10px var(--primary-color)' },
+                { transform: 'scale(1.1)', boxShadow: '0 0 20px var(--primary-color)' },
+                { transform: 'scale(1)', boxShadow: '0 0 10px var(--primary-color)' }
+            ], {
+                duration: 3000,
+                iterations: Infinity,
+                easing: 'ease-in-out'
+            });
+        }
+        
+        if (dateContent) {
+            dateContent.style.animation = 'fadeIn 1s ease-in-out forwards';
+            dateContent.style.opacity = '0';
+            
+            setTimeout(() => {
+                dateContent.style.opacity = '1';
+                dateContent.style.transform = 'scale(1)';
+            }, 800);
+        }
+    }
 }
 
 // 为section添加动画
@@ -334,15 +424,26 @@ function applyEnhancedProjectStyles() {
                 tag.style.fontWeight = "600";
                 tag.style.fontSize = "0.85rem";
                 
-                // 为特定类型的标签添加特殊样式
+                // 为特定类型的标签添加特殊样式 - 保持一致风格
                 if (tag.textContent === "Planning" || tag.textContent === "Start") {
                     tag.style.borderBottom = "2px solid var(--primary-color)";
+                    tag.style.borderRadius = "15px";
                     tag.style.padding = "0.35rem 0.9rem";
-                } else if (tag.textContent === "Development" || tag.textContent === "Milestone") {
-                    tag.style.borderLeft = "2px solid var(--secondary-color)";
-                    tag.style.padding = "0.35rem 0.9rem 0.35rem 1rem";
+                } else if (tag.textContent === "Development") {
+                    // 开发标签 - 与Start/Planning保持一致的风格
+                    tag.style.borderBottom = "2px solid var(--secondary-color)";
+                    tag.style.borderRadius = "15px";
+                    tag.style.padding = "0.35rem 0.9rem";
+                } else if (tag.textContent === "Milestone") {
+                    // 里程碑标签 - 与Start/Planning保持一致的风格
+                    tag.style.borderBottom = "2px solid var(--alive-color)";
+                    tag.style.borderRadius = "15px";
+                    tag.style.padding = "0.35rem 0.9rem";
                 } else if (tag.textContent === "Special") {
-                    // 保持特殊标签的原有样式
+                    // 特殊标签样式 - 设置基础样式
+                    tag.style.borderRadius = "15px";
+                    tag.style.padding = "0.35rem 0.9rem";
+                    // 注意：具体颜色将由updateSpecialTagColors函数处理
                 } else {
                     // 其他标签的默认增强样式
                     tag.style.borderRadius = "15px";
@@ -363,11 +464,28 @@ function applyEnhancedProjectStyles() {
         // 添加交互效果
         addItemInteraction(item);
     });
+    
+    // 在样式应用后立即更新Special标签颜色
+    updateSpecialTagColors();
+    
+    // 添加全局样式定义
+    if (!document.getElementById('tag-animations')) {
+        const styleElement = document.createElement('style');
+        styleElement.id = 'tag-animations';
+        styleElement.textContent = `
+            @keyframes shimmer {
+                0% { transform: rotate(45deg) translateX(-100%); }
+                100% { transform: rotate(45deg) translateX(100%); }
+            }
+        `;
+        document.head.appendChild(styleElement);
+    }
 }
 
 // 为时间线项目添加交互效果
 function addItemInteraction(item) {
     const dot = item.querySelector('.timeline-dot');
+    const moon = item.querySelector('.moon-decoration');
     const content = item.querySelector('.timeline-content');
     const date = item.querySelector('.timeline-date');
     
@@ -377,6 +495,9 @@ function addItemInteraction(item) {
         dot.style.boxShadow = '0 0 20px var(--glow)';
         date.style.fontWeight = '700';
         date.style.color = 'var(--primary-color)';
+        if (moon) {
+            moon.style.boxShadow = '0 0 20px var(--alive-color)';
+        }
         if (item.classList.contains('timeline-item-special')) {
             date.style.color = 'var(--alive-color)';
         }
@@ -387,6 +508,9 @@ function addItemInteraction(item) {
         dot.style.boxShadow = '0 0 12px var(--glow)';
         date.style.fontWeight = '500';
         date.style.color = '';
+        if (moon) {
+            moon.style.boxShadow = '0 0 15px var(--glow)';
+        }
     });
     
     // 鼠标悬停在时间点上时高亮日期和内容
@@ -395,6 +519,9 @@ function addItemInteraction(item) {
         content.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.2)';
         date.style.fontWeight = '700';
         date.style.color = 'var(--primary-color)';
+        if (moon) {
+            moon.style.transform = 'scale(1.2)';
+        }
         if (item.classList.contains('timeline-item-special')) {
             date.style.color = 'var(--alive-color)';
         }
@@ -405,5 +532,25 @@ function addItemInteraction(item) {
         content.style.boxShadow = '';
         date.style.fontWeight = '500';
         date.style.color = '';
+        if (moon) {
+            moon.style.transform = '';
+        }
     });
+    
+    // 月亮装饰交互
+    if (moon) {
+        moon.addEventListener('mouseenter', () => {
+            content.style.borderColor = 'var(--primary-color)';
+            content.style.transform = 'translateY(-5px)';
+            dot.style.transform = 'translate(-50%, -50%) scale(1.3)';
+            date.style.fontWeight = '700';
+        });
+        
+        moon.addEventListener('mouseleave', () => {
+            content.style.borderColor = '';
+            content.style.transform = '';
+            dot.style.transform = 'translate(-50%, -50%)';
+            date.style.fontWeight = '500';
+        });
+    }
 } 

@@ -60,6 +60,21 @@
     --orb-glow: var(--light-orb-glow);
     --card-text: var(--light-card-text);
     --card-title: var(--light-card-title);
+
+    /* Light theme RGB values */
+    --light-primary-color-rgb: 245, 168, 142;
+    --light-secondary-color-rgb: 232, 165, 193;
+    --light-tertiary-color-rgb: 245, 213, 198;
+    
+    /* Dark theme RGB values */
+    --dark-primary-color-rgb: 108, 99, 255;
+    --dark-secondary-color-rgb: 255, 107, 149;
+    --dark-tertiary-color-rgb: 67, 203, 255;
+    
+    /* Default to light theme */
+    --primary-color-rgb: var(--light-primary-color-rgb);
+    --secondary-color-rgb: var(--light-secondary-color-rgb);
+    --tertiary-color-rgb: var(--light-tertiary-color-rgb);
 }
 
 /* 夜间模式样式 */
@@ -80,6 +95,11 @@ body.dark-theme {
     --orb-glow: var(--dark-orb-glow);
     --card-text: var(--dark-card-text);
     --card-title: var(--dark-card-title);
+
+    /* Update RGB values when theme changes */
+    --primary-color-rgb: var(--dark-primary-color-rgb);
+    --secondary-color-rgb: var(--dark-secondary-color-rgb);
+    --tertiary-color-rgb: var(--dark-tertiary-color-rgb);
 }
 
 body {
@@ -305,8 +325,25 @@ body.dark-theme .page-subtitle {
 
 .timeline-item {
     position: relative;
-    margin-bottom: 5rem;
-    width: 100%;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: visible;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--primary-color) 10%, transparent 70%);
+    opacity: 0;
+    z-index: -1;
+    transition: all 0.5s ease;
 }
 
 .timeline-item:nth-child(odd) .timeline-content {
@@ -365,24 +402,57 @@ body.dark-theme .page-subtitle {
 
 .timeline-content {
     background: var(--card-bg);
-    border-radius: 8px;
     padding: 1.5rem;
-    width: 45%;
+    border-radius: 15px;
     box-shadow: var(--shadow);
     position: relative;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(15px);
+    width: 45%;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 2;
+    overflow: hidden;
 }
 
-.timeline-content:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+.timeline-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, 
+        rgba(var(--primary-color-rgb), 0.05), 
+        rgba(var(--secondary-color-rgb), 0.05));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.timeline-item:hover .timeline-content::before {
+    opacity: 1;
 }
 
 .timeline-content h3 {
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
     color: var(--card-title);
+    margin-bottom: 0.7rem;
+    position: relative;
+    display: inline-block;
+}
+
+.timeline-content h3::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    transition: width 0.4s ease;
+}
+
+.timeline-content:hover h3::after {
+    width: 100%;
 }
 
 .timeline-content p {
@@ -457,49 +527,46 @@ footer::before {
 
 /* 响应式设计 - 项目时间线 */
 @media (max-width: 992px) {
-    .timeline::before {
-        left: 30px;
+    .nav-container {
+        padding: 0 1.5rem;
     }
     
-    .timeline-item:nth-child(odd) .timeline-content,
-    .timeline-item:nth-child(even) .timeline-content {
-        width: calc(100% - 80px);
-        margin-left: 80px;
-        margin-right: 0;
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-        left: 0;
-        right: 0;
+    .projects-container {
+        grid-template-columns: repeat(2, 1fr);
     }
     
-    .timeline-dot {
-        left: 30px;
+    .timeline-wrapper {
+        padding: 3rem 1rem;
     }
     
-    .timeline-item:nth-child(odd) .timeline-date,
-    .timeline-item:nth-child(even) .timeline-date {
-        top: -30px;
-        left: 80px;
-        right: auto;
-        text-align: left;
-        transform: none;
+    .project-card {
+        height: 220px;
+    }
+    
+    .project-details {
+        padding: 1.5rem;
+    }
+    
+    .timeline {
+        margin-left: 2rem;
     }
 }
 
 @media (max-width: 768px) {
     .nav-menu {
         position: fixed;
-        top: 0;
+        top: 70px;
         left: -100%;
+        width: 100%;
+        height: auto;
         flex-direction: column;
         background: var(--nav-bg);
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: var(--shadow);
+        padding: 1rem 0;
+        border-radius: 0 0 10px 10px;
         backdrop-filter: blur(10px);
-        width: 80%;
-        height: 100vh;
-        padding-top: 5rem;
-        transition: left 0.3s ease;
-        z-index: 900;
-        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
     }
     
     .nav-menu.active {
@@ -507,18 +574,15 @@ footer::before {
     }
     
     .nav-item {
-        margin: 1.5rem 0;
-        width: 100%;
-        text-align: center;
+        margin: 1rem 0;
     }
     
     .nav-toggle {
         display: flex;
-        z-index: 1000;
     }
     
     .nav-toggle.active span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 6px);
+        transform: rotate(-45deg) translate(-5px, 6px);
     }
     
     .nav-toggle.active span:nth-child(2) {
@@ -526,19 +590,71 @@ footer::before {
     }
     
     .nav-toggle.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(5px, -6px);
+        transform: rotate(45deg) translate(-5px, -6px);
     }
     
     .page-title {
         font-size: 2.5rem;
     }
     
-    .theme-toggle-icon {
-        font-size: 1.3rem;
+    .page-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .projects-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .timeline {
+        margin-left: 0;
+    }
+    
+    .timeline-item {
+        padding: 1.5rem;
+    }
+    
+    .timeline-dot {
+        left: -12px;
+    }
+    
+    .timeline::before {
+        left: 0;
+    }
+    
+    .theme-toggle {
+        margin: 1.5rem auto;
+        justify-content: center;
+    }
+    
+    .logo {
+        margin-left: 0;
+    }
+    
+    .nav-item.theme-toggle {
+        margin: 1.5rem auto 0.5rem;
     }
     
     body.dark-theme .nav-menu {
-        box-shadow: 5px 0 25px rgba(0, 0, 0, 0.3);
+        background: var(--dark-nav-bg);
+    }
+
+    .timeline-item .moon-decoration {
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        transform: none;
+    }
+    
+    .timeline-item:nth-child(even) .moon-decoration {
+        left: auto;
+        right: 10px;
+    }
+    
+    .timeline-content {
+        width: 85%;
+        margin-left: 60px;
     }
 }
 
@@ -548,19 +664,100 @@ footer::before {
     }
     
     .container {
+        width: 95%;
         padding-top: 5rem;
     }
     
-    .timeline-content {
-        padding: 1.5rem;
+    .page-title {
+        font-size: 2.2rem;
     }
     
-    .timeline-content h3 {
-        font-size: 1.2rem;
+    .page-subtitle {
+        font-size: 1rem;
     }
     
-    .timeline-content p {
+    .timeline-item {
+        padding: 1rem;
+    }
+    
+    .timeline-item-date {
+        font-size: 0.8rem;
+    }
+    
+    .timeline-item-title {
+        font-size: 1.1rem;
+    }
+    
+    .timeline-item-description {
         font-size: 0.9rem;
+    }
+    
+    .timeline-item-tag {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
+    }
+    
+    .current-date {
+        padding: 0.5rem 1rem;
+    }
+    
+    .logo a {
+        font-size: 1.5rem;
+    }
+    
+    .dreamer-text {
+        font-size: 0.4rem;
+    }
+    
+    .moon-cat-icon {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+/* 增加小屏幕设备的适配性 */
+@media (max-width: 360px) {
+    .page-title {
+        font-size: 1.8rem;
+    }
+    
+    .timeline-item {
+        padding: 0.8rem;
+    }
+    
+    .timeline-item-title {
+        font-size: 1rem;
+    }
+    
+    .timeline-item-description {
+        font-size: 0.85rem;
+    }
+    
+    .logo a {
+        font-size: 1.3rem;
+    }
+}
+
+/* 修复iOS等移动设备上的触摸事件问题 */
+@media (hover: none) {
+    .btn:hover::before {
+        width: 100%;
+    }
+    
+    .nav-item a:hover::after {
+        width: 100%;
+    }
+    
+    .project-card:hover .project-overlay {
+        opacity: 1;
+    }
+    
+    .project-card:hover .project-preview {
+        transform: scale(1.05);
+    }
+    
+    .timeline-item-special:hover {
+        transform: translateY(-5px);
     }
 }
 
@@ -829,7 +1026,7 @@ body:not(.dark-theme) .enhanced-project .tag {
     right: -100px;
 }
 
-/* 项目页面专用装饰 */
+/* 项目页面专用装饰 - 移除鼠标悬浮显示月亮 */
 .timeline-item {
     position: relative;
     transition: transform 0.3s ease;
@@ -839,17 +1036,9 @@ body:not(.dark-theme) .enhanced-project .tag {
     transform: translateY(-5px);
 }
 
+/* 移除鼠标悬浮时显示的半圆形月亮 */
 .timeline-item:hover::after {
-    content: '';
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,20 A30,30 0 1,0 80,50 A20,30 0 0,1 50,20" fill="%23f5a88e" stroke="%23c17f91" stroke-width="2" /></svg>');
-    background-repeat: no-repeat;
-    top: -10px;
-    right: -10px;
-    opacity: 0.7;
-    animation: gentle-bounce 2s ease-in-out infinite;
+    display: none;
 }
 
 .timeline-dot {
@@ -868,5 +1057,92 @@ body:not(.dark-theme) .enhanced-project .tag {
     
     .footer-decoration {
         height: 30px;
+    }
+}
+
+/* Add moon decoration to project items */
+.timeline-item .moon-decoration {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    box-shadow: 0 0 15px var(--glow);
+    top: 15px;
+    z-index: 5;
+    opacity: 0.85;
+    transition: all 0.4s ease;
+}
+
+.timeline-item:nth-child(odd) .moon-decoration {
+    right: 22%;
+    transform: translateX(50%);
+}
+
+.timeline-item:nth-child(even) .moon-decoration {
+    left: 22%;
+    transform: translateX(-50%);
+}
+
+/* Add moon shadow */
+.timeline-item .moon-decoration::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, transparent, rgba(0, 0, 0, 0.2));
+    top: 3px;
+    left: 3px;
+    opacity: 0.5;
+}
+
+/* Hover effects for moon */
+.timeline-item:hover .moon-decoration {
+    transform: translateX(0) scale(1.2);
+    box-shadow: 0 0 20px var(--alive-color);
+}
+
+.timeline-item-special .moon-decoration {
+    background: linear-gradient(135deg, var(--alive-color), var(--tertiary-color));
+    box-shadow: 0 0 20px var(--alive-color);
+}
+
+/* Enhanced timeline styling */
+.timeline::before {
+    background: linear-gradient(to bottom, 
+        transparent, 
+        var(--primary-color), 
+        var(--secondary-color), 
+        var(--primary-color), 
+        transparent);
+    opacity: 0.5;
+    box-shadow: 0 0 15px var(--glow);
+}
+
+.timeline-dot {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    box-shadow: 0 0 12px var(--glow);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .timeline-item .moon-decoration {
+        display: block;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        transform: none;
+    }
+    
+    .timeline-item:nth-child(even) .moon-decoration {
+        left: auto;
+        right: 10px;
+    }
+    
+    .timeline-content {
+        width: 85%;
+        margin-left: 60px;
     }
 } 

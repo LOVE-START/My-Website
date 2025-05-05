@@ -565,16 +565,16 @@ body.dark-theme .hero-visual::after {
     .hero-section {
         flex-direction: column;
         text-align: center;
-        padding-top: 2rem;
+        padding: 2rem 0;
     }
     
     .hero-title {
-        font-size: 3.5rem;
+        font-size: 2.5rem;
     }
     
     .hero-subtitle {
-        margin: 0 auto 2rem;
-        max-width: 100%;
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
     }
     
     .hero-actions {
@@ -582,29 +582,27 @@ body.dark-theme .hero-visual::after {
     }
     
     .hero-visual {
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: -30px;
-        transform: translateY(0);
-        height: 350px;
-        left: 0;
+        margin-top: 2rem;
+        width: 70%;
+        height: 300px;
     }
 }
 
 @media (max-width: 768px) {
     .nav-menu {
         position: fixed;
-        top: 0;
+        top: 70px;
         left: -100%;
+        width: 100%;
+        height: auto;
         flex-direction: column;
         background: var(--nav-bg);
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: var(--shadow);
+        padding: 1rem 0;
+        border-radius: 0 0 10px 10px;
         backdrop-filter: blur(10px);
-        width: 80%;
-        height: 100vh;
-        padding-top: 5rem;
-        transition: left 0.3s ease;
-        z-index: 900;
-        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
     }
     
     .nav-menu.active {
@@ -612,18 +610,15 @@ body.dark-theme .hero-visual::after {
     }
     
     .nav-item {
-        margin: 1.5rem 0;
-        width: 100%;
-        text-align: center;
+        margin: 1rem 0;
     }
     
     .nav-toggle {
         display: flex;
-        z-index: 1000;
     }
     
     .nav-toggle.active span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 6px);
+        transform: rotate(-45deg) translate(-5px, 6px);
     }
     
     .nav-toggle.active span:nth-child(2) {
@@ -631,36 +626,35 @@ body.dark-theme .hero-visual::after {
     }
     
     .nav-toggle.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(5px, -6px);
+        transform: rotate(45deg) translate(-5px, -6px);
     }
     
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
     }
     
     .hero-visual {
-        margin-top: 10px;
-        transform: translateY(0);
-        height: 300px;
-        left: 0;
+        width: 80%;
+        height: 250px;
+        margin: 2rem auto 0;
     }
     
     .orbiting-circle {
-        width: 200px;
-        height: 200px;
-        top: 50%;
+        width: 100px;
+        height: 100px;
     }
     
     .hero-visual::after {
-        width: 30px;
-        height: 30px;
-        right: 25%;
-        top: 55%;
-        animation: avoid-opposite 15s linear infinite, sphere-pulse 3s ease-in-out infinite;
+        width: 140px;
+        height: 140px;
+    }
+    
+    .logo {
+        margin-left: 0;
     }
     
     body.dark-theme .nav-menu {
-        box-shadow: 5px 0 25px rgba(0, 0, 0, 0.3);
+        background: var(--dark-nav-bg);
     }
 }
 
@@ -670,43 +664,88 @@ body.dark-theme .hero-visual::after {
     }
     
     .container {
+        width: 95%;
         padding-top: 5rem;
     }
     
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     
     .hero-subtitle {
-        font-size: 1.1rem;
+        font-size: 0.9rem;
     }
     
     .hero-actions {
         flex-direction: column;
-        gap: 1rem;
+        align-items: center;
     }
     
     .btn {
-        width: 100%;
+        margin: 0.5rem;
+        font-size: 0.9rem;
+        padding: 0.6rem 1.2rem;
     }
     
     .hero-visual {
-        margin-top: 20px;
-        transform: translateY(0);
-        height: 250px;
+        width: 90%;
+        height: 200px;
     }
     
     .orbiting-circle {
-        width: 180px;
-        height: 180px;
-        top: 45%;
+        width: 80px;
+        height: 80px;
     }
     
     .hero-visual::after {
-        width: 15px;
-        height: 15px;
-        right: 22%;
-        top: 42%;
+        width: 120px;
+        height: 120px;
+    }
+    
+    .logo a {
+        font-size: 1.5rem;
+    }
+    
+    .dreamer-text {
+        font-size: 0.4rem;
+    }
+    
+    .moon-cat-icon {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+/* 增加小屏幕设备的适配性 */
+@media (max-width: 360px) {
+    .hero-title {
+        font-size: 1.6rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.8rem;
+    }
+    
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    .hero-visual {
+        height: 180px;
+    }
+    
+    .moon-cat img {
+        max-width: 70px;
+    }
+    
+    .orbiting-circle {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .logo a {
+        font-size: 1.3rem;
     }
 }
 
@@ -1038,6 +1077,30 @@ body.dark-theme .orbiting-circle {
     }
     
     .footer-decoration {
-        height: 30px;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .theme-toggle {
+        margin: 1rem auto;
+    }
+    
+    .nav-item.theme-toggle {
+        margin: 1.5rem auto 0.5rem;
+    }
+}
+
+/* 修复iOS等移动设备上的触摸事件问题 */
+@media (hover: none) {
+    .btn:hover::before {
+        width: 100%;
+    }
+    
+    .nav-item a:hover::after {
+        width: 100%;
+    }
+    
+    .hero-visual .moon-cat:hover {
+        transform: translateY(-5px);
     }
 }
