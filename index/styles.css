@@ -680,8 +680,8 @@ body.dark-theme .hero-visual::after {
     }
     
     .orbiting-circle {
-        width: 25px;
-        height: 25px;
+        width: 4.2px;
+        height: 4.2px;
     }
     
     .hero-visual::after {
@@ -690,6 +690,12 @@ body.dark-theme .hero-visual::after {
         opacity: 0.85;
         animation: symbiote-morph 5s ease-in-out infinite, avoid-opposite 15s linear infinite;
         filter: blur(3px);
+    }
+    
+    .moon-cat {
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
     }
     
     .logo {
@@ -736,8 +742,8 @@ body.dark-theme .hero-visual::after {
     }
     
     .orbiting-circle {
-        width: 80px;
-        height: 80px;
+        width: 4.2px;
+        height: 4.2px;
     }
     
     .hero-visual::after {
@@ -746,6 +752,12 @@ body.dark-theme .hero-visual::after {
         opacity: 0.85;
         animation: symbiote-morph 5s ease-in-out infinite, avoid-opposite 15s linear infinite;
         filter: blur(3px);
+    }
+    
+    .moon-cat {
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
     }
     
     .logo a {
@@ -782,12 +794,18 @@ body.dark-theme .hero-visual::after {
     }
     
     .moon-cat img {
-        max-width: 35px;
+        max-width: 17.5px;
     }
     
     .orbiting-circle {
-        width: 70px;
-        height: 70px;
+        width: 4.2px;
+        height: 4.2px;
+    }
+    
+    .moon-cat {
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
     }
     
     .logo a {
