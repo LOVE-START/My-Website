@@ -3,55 +3,87 @@ document.getElementById('current-year').textContent = new Date().getFullYear();
 
 // 页面加载时执行
 document.addEventListener('DOMContentLoaded', () => {
-    // 初始化主题
     initTheme();
-    
-    // 初始化粒子背景
     initParticles();
-    
-    // 导航栏交互
     setupNavbar();
-    
-    // 首页初始化
     initHomePage();
-    
-    // 为每个section添加淡入动画
     animateSections();
-    
-    // 月亮猫点击旋转交互
-    setupMoonCatInteraction();
-    
-    // 添加星星背景
+    initVinylPlayer();
     createStars();
+    
+    if (typeof GlobalMusicPlayer !== 'undefined') {
+        GlobalMusicPlayer.init();
+    }
 });
 
-// 月亮猫点击旋转交互
-function setupMoonCatInteraction() {
-    const moonCat = document.querySelector('.moon-cat');
-    if (moonCat) {
-        // 默认不添加旋转状态，让猫猫保持浮动状态
-        // moonCat.classList.add('rotating');
+// 黑胶唱片播放器模块
+function initVinylPlayer() {
+    const player = document.getElementById('vinylPlayer');
+    const record = document.getElementById('vinylRecord');
+    const label = document.getElementById('vinylLabel');
+    const playBtn = document.getElementById('vinylPlayBtn');
+    const status = document.getElementById('vinylStatus');
+    const audio = document.getElementById('bgMusic');
+    const moonCatPlaceholder = document.getElementById('moonCatPlaceholder');
+    
+    if (!player) return;
+
+    const labelImg = document.createElement('img');
+    labelImg.src = '../assets/images/moon-cat.png';
+    labelImg.alt = 'Now Playing';
+    labelImg.className = 'vinyl-label-img';
+    label.appendChild(labelImg);
+
+    function togglePlay(e) {
+        if (e) e.stopPropagation();
         
-        moonCat.addEventListener('click', function() {
-            // 点击时切换旋转和浮动状态
-            if (this.classList.contains('rotating')) {
-                this.classList.remove('rotating');
-                this.style.animation = 'enhanced-float 6s ease-in-out infinite';
+        if (typeof GlobalMusicPlayer !== 'undefined') {
+            const state = GlobalMusicPlayer.getState();
+            if (state.isPlaying) {
+                GlobalMusicPlayer.pause();
             } else {
-                this.classList.add('rotating');
-                this.style.animation = 'rotate-in-place 15s linear infinite';
+                GlobalMusicPlayer.play();
             }
-            
-            // 添加点击时的波纹效果
-            const ripple = document.createElement('div');
-            ripple.classList.add('moon-cat-ripple');
-            this.appendChild(ripple);
-            
-            // 定时移除波纹效果
-            setTimeout(() => {
-                ripple.remove();
-            }, 1000);
+        }
+    }
+
+    playBtn.addEventListener('click', togglePlay);
+    player.addEventListener('click', togglePlay);
+    
+    if (moonCatPlaceholder) {
+        moonCatPlaceholder.addEventListener('click', togglePlay);
+        moonCatPlaceholder.title = '点击播放音乐';
+    }
+
+    if (audio) {
+        audio.addEventListener('ended', () => {
+            record.classList.remove('playing');
+            player.classList.remove('playing');
+            player.classList.remove('visible');
+            label.classList.remove('playing');
+            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            status.textContent = 'Click to Play';
+            if (moonCatPlaceholder) {
+                moonCatPlaceholder.classList.remove('hidden');
+            }
         });
+    }
+}
+
+/**
+ * 同步图片和播放器的显示状态
+ * @param {boolean} isPlaying - 是否正在播放
+ */
+function syncMoonCatVisibility(isPlaying) {
+    const player = document.getElementById('vinylPlayer');
+    const moonCatPlaceholder = document.getElementById('moonCatPlaceholder');
+    
+    if (isPlaying) {
+        if (player) player.classList.add('visible');
+        if (moonCatPlaceholder) moonCatPlaceholder.classList.add('hidden');
+    } else {
+        if (player) player.classList.remove('visible');
+        if (moonCatPlaceholder) moonCatPlaceholder.classList.remove('hidden');
     }
 }
 

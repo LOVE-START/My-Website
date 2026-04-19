@@ -518,73 +518,320 @@ body.dark-theme .btn-glass:hover {
     z-index: 25;
 }
 
-/* 月亮猫容器 */
-.moon-cat {
-    position: absolute; 
-    width: 260px;
-    height: 260px;
-    top: 50%;
+/* Moon Cat 占位图片 - 不播放时显示 */
+.moon-cat-placeholder {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    top: 40%;
     left: 50%;
     transform: translate(calc(-50% + 130px), calc(-50% + 55px));
-    z-index: 20;
+    z-index: 19;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease, transform 0.5s ease;
     cursor: pointer;
-    transition: transform 0.3s ease;
-    animation: enhanced-float 6s ease-in-out infinite;
-    border-radius: 50%;
 }
 
-.moon-cat:hover {
-    transform: translate(calc(-50% + 130px), calc(-50% + 55px)) scale(1.08);
+.moon-cat-placeholder:hover {
+    transform: translate(calc(-50% + 130px), calc(-50% + 55px)) scale(1.05);
 }
 
-.moon-cat.rotating {
-    animation: rotate-in-place 15s linear infinite;
+.moon-cat-placeholder:hover .moon-cat-img {
+    filter: drop-shadow(0 0 30px rgba(245, 168, 142, 0.5));
 }
 
-@keyframes rotate-in-place {
-    0% { transform: translate(calc(-50% + 130px), calc(-50% + 55px)) rotate(0deg) scale(1); }
-    50% { transform: translate(calc(-50% + 130px), calc(-50% + 55px)) rotate(180deg) scale(1.05); }
-    100% { transform: translate(calc(-50% + 130px), calc(-50% + 55px)) rotate(360deg) scale(1); }
-}
-
-@keyframes enhanced-float {
-    0% {
-        transform: translate(calc(-50% + 130px), calc(-50% + 55px)) rotate(0deg) scale(1);
-        filter: brightness(1);
-    }
-    25% {
-        transform: translate(calc(-50% + 130px), calc(-50% + 55px)) rotate(2deg) scale(1.005);
-        filter: brightness(1);
-    }
-    50% {
-        transform: translate(calc(-50% + 130px), calc(-50% + 55px)) rotate(0deg) scale(1.01);
-        filter: brightness(1);
-    }
-    75% {
-        transform: translate(calc(-50% + 130px), calc(-50% + 55px)) rotate(-2deg) scale(1.005);
-        filter: brightness(1);
-    }
-    100% {
-        transform: translate(calc(-50% + 130px), calc(-50% + 55px)) rotate(0deg) scale(1);
-        filter: brightness(1);
-    }
-}
-
-.moon-cat img {
+.moon-cat-img {
     width: 100%;
     height: 100%;
     object-fit: contain;
     border-radius: 50%;
-    pointer-events: none;
-    filter: sepia(10%) hue-rotate(-5deg) saturate(1.1) brightness(1.03) drop-shadow(0 0 8px rgba(245, 168, 142, 0.3));
+    filter: drop-shadow(0 0 20px rgba(245, 168, 142, 0.3));
+    animation: gentle-float 4s ease-in-out infinite;
 }
 
-body.dark-theme .moon-cat img {
-    filter: sepia(0%) hue-rotate(0deg) saturate(1) brightness(1.05)
-            drop-shadow(0 0 16px rgba(255, 255, 255, 0.4));
+@keyframes gentle-float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-8px) rotate(2deg);
+    }
+}
+
+/* 播放时隐藏图片，显示唱片机 */
+.moon-cat-placeholder.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(calc(-50% + 130px), calc(-50% + 55px)) scale(0.9);
+}
+
+/* 黑胶唱片机容器 - 默认隐藏 */
+.vinyl-player {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    top: 35%;
+    left: 50%;
+    transform: translate(calc(-50% + 130px), calc(-50% + 55px));
+    z-index: 20;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.5s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* 播放时显示唱片机 */
+.vinyl-player.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.vinyl-player:hover {
+    transform: translate(calc(-50% + 130px), calc(-50% + 55px)) scale(1.03);
+}
+
+/* 黑胶唱片 */
+.vinyl-record {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: 
+        radial-gradient(circle at center, 
+            #1a1a1a 0%, 
+            #1a1a1a 15%,
+            #2a2a2a 15.5%,
+            #1a1a1a 16%,
+            #2a2a2a 30%,
+            #1a1a1a 31%,
+            #2a2a2a 45%,
+            #1a1a1a 46%,
+            #2a2a2a 60%,
+            #1a1a1a 61%,
+            #2a2a2a 75%,
+            #1a1a1a 76%,
+            #2a2a2a 90%,
+            #1a1a1a 100%
+        );
+    box-shadow: 
+        0 0 0 3px #333,
+        0 0 20px rgba(0, 0, 0, 0.4),
+        inset 0 0 30px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.vinyl-record.playing {
+    animation: vinyl-spin 3s linear infinite;
+}
+
+@keyframes vinyl-spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* 唱片纹理 */
+.vinyl-grooves {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: repeating-radial-gradient(
+        circle at center,
+        transparent 0px,
+        transparent 1px,
+        rgba(255, 255, 255, 0.03) 2px,
+        transparent 3px
+    );
+}
+
+/* 唱片标签 */
+.vinyl-label {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.vinyl-label-text {
+    font-size: 1.8rem;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.3s ease;
+}
+
+.vinyl-label.playing .vinyl-label-text {
+    opacity: 0;
+}
+
+.vinyl-label-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.vinyl-label.playing .vinyl-label-img {
+    opacity: 1;
+}
+
+/* 唱片中心孔 */
+.vinyl-center {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: #333;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* ========================================
+   唱臂组件 - 带有底座、臂杆和唱头的完整唱臂设计
+   ======================================== */
+
+/* 唱臂整体容器 */
+.vinyl-tonearm {
+    position: absolute;      /* 绝对定位 */
+    top: 8%;                /* 距离顶部的距离 - 调整此值改变唱臂整体垂直位置 */
+    right: 4%;               /* 距离右边的距离 - 调整此值改变唱臂整体水平位置 */
+    z-index: 10;             /* 层级，确保在唱片上方 */
+    transform-origin: top right;  /* 旋转中心点 - 设为右上角（底座位置） */
+    transition: transform 0.5s ease;  /* 播放时旋转的过渡动画 */
+}
+
+/* 播放状态 - 唱臂旋转到唱片上 */
+.vinyl-player.playing .vinyl-tonearm {
+    transform: rotate(-50deg);  /* 播放时旋转角度 - 调整此值改变唱臂落下的位置 */
+}
+
+/* 唱臂底座 - 固定在唱片机上的圆形基座 */
+.tonearm-base {
+    width: 20px;              /* 底座宽度 */
+    height: 20px;             /* 底座高度 */
+    background: linear-gradient(135deg, #666, #444);  /* 金属渐变效果 */
+    border-radius: 50%;       /* 圆形 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);  /* 阴影 */
+}
+
+/* 唱臂臂杆 - 连接底座和唱头的杆子 */
+.tonearm-arm {
+    position: absolute;       /* 相对于底座定位 */
+    width: 90px;              /* 臂杆长度 - 调整此值改变臂杆长度 */
+    height: 6px;              /* 臂杆粗细 */
+    background: linear-gradient(to bottom, #888, #555);  /* 金属渐变 */
+    top: 10px;                /* 距离底座顶部的距离 */
+    right: 10px;              /* 距离底座右边的距离 */
+    border-radius: 3px;       /* 圆角 */
+    transform: rotate(10deg);  /* 初始角度 - 调整此值改变臂杆初始倾斜角度 */
+    transform-origin: top right;  /* 旋转中心点 - 设为连接底座的一端 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);  /* 阴影 */
+}
+
+/* 唱头 - 臂杆末端的唱针头 */
+.tonearm-head {
+    position: absolute;       /* 相对于臂杆末端定位 */
+    width: 12px;              /* 唱头宽度 */
+    height: 18px;             /* 唱头高度 */
+    background: linear-gradient(135deg, #777, #444);  /* 金属渐变 */
+    left: -85px;              /* 定位到臂杆末端（臂杆宽度90px） */
+    top: -70%;                /* 定位到臂杆下方 */
+    transform: rotate(120deg);  /* 旋转使唱头垂直向下（与臂杆20deg角度配合） */
+    border-radius: 2px 2px 4px 4px;  /* 圆角 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);  /* 阴影 */
+}
+
+/* 唱针 - 唱头下方的细针 */
+.tonearm-head::after {
+    content: '';              /* 伪元素 */
+    position: absolute;       /* 相对于唱头定位 */
+    width: 2px;               /* 唱针粗细 */
+    height: 10px;             /* 唱针长度 */
+    background: #333;         /* 颜色 */
+    bottom: -6px;             /* 从唱头底部延伸出去的距离 */
+    left: 50%;                /* 水平居中 */
+    transform: translateX(-50%);  /* 居中修正 */
+    border-radius: 0 0 1px 1px;  /* 底部圆角 */
+}
+
+/* 控制按钮 */
+.vinyl-controls {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.vinyl-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(245, 168, 142, 0.3);
+    transition: all 0.3s ease;
+}
+
+.vinyl-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(245, 168, 142, 0.4);
+}
+
+.vinyl-btn:active {
+    transform: scale(0.95);
+}
+
+/* 状态提示 */
+.vinyl-status {
+    position: absolute;
+    bottom: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.85rem;
+    color: var(--text-color);
+    opacity: 0.8;
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+}
+
+/* 暗色主题适配 */
+body.dark-theme .vinyl-record {
+    box-shadow: 
+        0 0 0 3px #222,
+        0 0 30px rgba(212, 149, 106, 0.2),
+        inset 0 0 30px rgba(0, 0, 0, 0.6);
+}
+
+body.dark-theme .vinyl-btn {
+    box-shadow: 0 4px 15px rgba(212, 149, 106, 0.3);
+}
+
+body.dark-theme .vinyl-btn:hover {
+    box-shadow: 0 6px 20px rgba(212, 149, 106, 0.4);
 }
 
 footer {
@@ -764,6 +1011,48 @@ body.dark-theme .hero-visual::after {
     body.dark-theme .nav-menu {
         box-shadow: 5px 0 25px rgba(0, 0, 0, 0.3);
     }
+    
+    .vinyl-player {
+        width: 240px;
+        height: 240px;
+        transform: translate(calc(-50% + 120px), calc(-50% + 55px));
+    }
+    
+    .vinyl-player:hover {
+        transform: translate(calc(-50% + 120px), calc(-50% + 55px)) scale(1.03);
+    }
+    
+    .vinyl-player.visible:hover {
+        transform: translate(calc(-50% + 120px), calc(-50% + 55px)) scale(1.03);
+    }
+    
+    .moon-cat-placeholder {
+        width: 180px;
+        height: 180px;
+        transform: translate(calc(-50% + 120px), calc(-50% + 55px));
+    }
+    
+    .moon-cat-placeholder:hover {
+        transform: translate(calc(-50% + 120px), calc(-50% + 55px)) scale(1.05);
+    }
+    
+    .moon-cat-placeholder.hidden {
+        transform: translate(calc(-50% + 120px), calc(-50% + 55px)) scale(0.9);
+    }
+    
+    .vinyl-record {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .vinyl-label {
+        width: 55px;
+        height: 55px;
+    }
+    
+    .vinyl-label-text {
+        font-size: 1.4rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -810,6 +1099,62 @@ body.dark-theme .hero-visual::after {
         right: 22%;
         top: 42%;
     }
+    
+    .vinyl-player {
+        width: 200px;
+        height: 200px;
+        transform: translate(calc(-50% + 100px), calc(-50% + 45px));
+    }
+    
+    .vinyl-player:hover {
+        transform: translate(calc(-50% + 100px), calc(-50% + 45px)) scale(1.03);
+    }
+    
+    .vinyl-player.visible:hover {
+        transform: translate(calc(-50% + 100px), calc(-50% + 45px)) scale(1.03);
+    }
+    
+    .moon-cat-placeholder {
+        width: 150px;
+        height: 150px;
+        transform: translate(calc(-50% + 100px), calc(-50% + 45px));
+    }
+    
+    .moon-cat-placeholder:hover {
+        transform: translate(calc(-50% + 100px), calc(-50% + 45px)) scale(1.05);
+    }
+    
+    .moon-cat-placeholder.hidden {
+        transform: translate(calc(-50% + 100px), calc(-50% + 45px)) scale(0.9);
+    }
+    
+    .vinyl-record {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .vinyl-label {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .vinyl-label-text {
+        font-size: 1.2rem;
+    }
+    
+    .tonearm-arm {
+        width: 60px;
+    }
+    
+    .vinyl-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 0.9rem;
+    }
+    
+    .vinyl-status {
+        font-size: 0.75rem;
+    }
 }
 
 /* 夜间模式覆盖样式 */
@@ -831,33 +1176,6 @@ body.dark-theme .highlight-text::after {
 
 body.dark-theme .orbiting-circle {
     box-shadow: none;
-}
-
-/* 点击波纹效果 */
-.moon-cat-ripple {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: transparent;
-    border: 2px solid var(--primary-color);
-    transform: scale(0.9);
-    opacity: 0.8;
-    animation: ripple-effect 1s ease-out forwards;
-    pointer-events: none;
-}
-
-@keyframes ripple-effect {
-    0% {
-        transform: scale(0.9);
-        opacity: 0.8;
-        border-width: 2px;
-    }
-    100% {
-        transform: scale(1.5);
-        opacity: 0;
-        border-width: 1px;
-    }
 }
 
 /* 星星效果 */
@@ -1008,14 +1326,6 @@ body.dark-theme .orbiting-circle {
 
 .hero-title:hover::after {
     transform: scaleX(1);
-}
-
-.hero-visual .moon-cat {
-    transition: transform 0.5s ease;
-}
-
-.hero-visual .moon-cat:hover {
-    transform: scale(1.05) rotate(5deg);
 }
 
 /* 小屏幕调整 */

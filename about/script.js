@@ -20,6 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 初始化复制功能
     initClipboard();
+    
+    // 初始化全局音乐播放器
+    if (typeof GlobalMusicPlayer !== 'undefined') {
+        GlobalMusicPlayer.init();
+    }
 });
 
 // 初始化主题

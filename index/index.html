@@ -9,6 +9,7 @@
     <link rel="shortcut icon" href="../assets/images/favicon.ico">
     <link rel="apple-touch-icon" href="../assets/images/favicon.png">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../assets/css/music-player.css">
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -141,11 +142,33 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="orbiting-circle">
+                <div class="orbiting-circle"></div>
+                <div class="moon-cat-placeholder" id="moonCatPlaceholder">
+                    <img src="../assets/images/moon-cat.png" alt="Moon Cat" class="moon-cat-img">
                 </div>
-                <div class="moon-cat">
-                    <img src="../assets/images/moon-cat.png" alt="Cat on moon">
+                <div class="vinyl-player" id="vinylPlayer">
+                    <div class="vinyl-record" id="vinylRecord">
+                        <div class="vinyl-grooves"></div>
+                        <div class="vinyl-label" id="vinylLabel">
+                            <span class="vinyl-label-text">♪</span>
+                        </div>
+                        <div class="vinyl-center"></div>
+                    </div>
+                    <div class="vinyl-tonearm">
+                        <div class="tonearm-base"></div>
+                        <div class="tonearm-arm"></div>
+                        <div class="tonearm-head"></div>
+                    </div>
+                    <div class="vinyl-controls">
+                        <button class="vinyl-btn" id="vinylPlayBtn" title="播放/暂停">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <div class="vinyl-status" id="vinylStatus">Click to Play</div>
                 </div>
+                <audio id="bgMusic" preload="auto">
+                    <source src="../assets/阿良良木健 - 亲爱的（Instrumental）.mp3" type="audio/mpeg">
+                </audio>
             </div>
         </div>
         
@@ -162,6 +185,7 @@
     </div>
     
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="../assets/js/music-player.js"></script>
     <script src="script.js"></script>
 </body>
 </html> 

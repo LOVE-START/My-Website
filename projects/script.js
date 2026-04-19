@@ -201,17 +201,33 @@
         createItem(item, index) {
             const element = document.createElement('div');
             const isSpecial = item.type === 'special';
+            const isComplete = item.id && item.id.endsWith('-complete');
             
-            element.className = `timeline-item${isSpecial ? ' timeline-item-special' : ''}`;
+            element.className = `timeline-item${isSpecial ? ' timeline-item-special' : ''}${isComplete ? ' timeline-item-complete' : ''}`;
             element.dataset.type = item.type;
             element.dataset.index = index;
 
             const date = parseDate(item.date);
             
+            // 根据项目ID确定背景图片
+            let bgImageHtml = '';
+            if (isComplete) {
+                const imageMap = {
+                    'nfucourse-complete': '../assets/images/course.png',
+                    'nfunest-complete': '../assets/images/nest.png',
+                    'nfuyummy-complete': '../assets/images/yummy.png'
+                };
+                const bgImage = imageMap[item.id];
+                if (bgImage) {
+                    bgImageHtml = `<div class="timeline-bg-image" style="background-image: url('${bgImage}')"></div>`;
+                }
+            }
+            
             element.innerHTML = `
                 <div class="timeline-dot"></div>
                 <div class="timeline-date">${formatDate(date)}</div>
                 <div class="timeline-content">
+                    ${bgImageHtml}
                     <h3>${this.escapeHtml(item.title)}</h3>
                     <p>${this.escapeHtml(item.description)}</p>
                     <div class="timeline-tags">
@@ -593,6 +609,10 @@
             AnimationController.initSectionAnimations();
             
             InteractionController.init();
+
+            if (typeof GlobalMusicPlayer !== 'undefined') {
+                GlobalMusicPlayer.init();
+            }
 
             window.addEventListener('beforeunload', cleanupAnimations);
         },
