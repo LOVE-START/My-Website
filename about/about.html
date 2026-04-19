@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | ZeroNight</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+    <link rel="shortcut icon" href="../assets/images/favicon.ico">
+    <link rel="apple-touch-icon" href="../assets/images/favicon.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .moon-cat-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-text {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        .dreamer-text {
+            display: block;
+            font-size: 0.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.8;
+            margin-top: 2px;
+            color: var(--text-color);
+            -webkit-text-fill-color: var(--text-color);
+        }
+        
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            margin-left: 2rem;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .theme-toggle-icon {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle-switch {
+            position: relative;
+            width: 45px;
+            height: 22px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 25px;
+            margin: 0 10px;
+            padding: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-theme .theme-toggle-switch::after {
+            left: calc(100% - 20px);
+        }
+        
+        @media (max-width: 768px) {
+            .theme-toggle {
+                margin: 1.5rem auto;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles-container" id="particles-js"></div>
+    
+    <!-- 添加暖色背景 -->
+    <div class="warm-glow top-left"></div>
+    <div class="warm-glow bottom-right"></div>
+    
+    <!-- 添加星星装饰 -->
+    <div class="stars-decoration" id="starsContainer"></div>
+    
+    <!-- 爆炸星星容器 -->
+    <div class="explosion-container" id="explosionContainer"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <svg class="moon-cat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                    <path d="M50,20 A30,30 0 1,0 80,50 A20,30 0 0,1 50,20" fill="#f5a88e" stroke="#c17f91" stroke-width="2" />
+                    <circle cx="65" cy="40" r="2" fill="#714e42" />
+                    <circle cx="75" cy="50" r="2" fill="#714e42" />
+                    <path d="M67,55 Q70,58 73,55" fill="none" stroke="#714e42" stroke-width="2" stroke-linecap="round" />
+                    <path d="M55,35 L60,30 M80,45 L85,42" stroke="#c17f91" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                <div>
+                    <a href="../index/index.html" class="logo-text">ZeroNight</a>
+                    <span class="dreamer-text">developer • creator • dreamer</span>
+                </div>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../index/index.html">Home</a></li>
+                <li class="nav-item"><a href="../projects/projects.html">Projects</a></li>
+                <li class="nav-item active"><a href="../about/about.html">About</a></li>
+                <li class="nav-item theme-toggle" id="themeToggle">
+                    <i class="fas fa-sun theme-toggle-icon"></i>
+                    <div class="theme-toggle-switch"></div>
+                    <i class="fas fa-moon theme-toggle-icon"></i>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <header class="page-header">
+            <h1 class="page-title">About Me</h1>
+            <div class="page-subtitle">♥</div>
+        </header>
+
+        <section class="about-intro">
+            <div class="envelope-container">
+                <div class="envelope">
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-front">
+                        <div class="envelope-seal">
+                            <div class="seal-pattern"><i class="fas fa-crown"></i></div>
+                            <span>♥</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-card letter-content">
+                    <div class="about-content">
+                        <h2>Dear Baby</h2>
+                        <p class="about-greeting">Hello there!</p>
+                        <div class="about-letter">
+                            <p>Welcome to my digital sanctuary. I am <span class="about-name">ZeroNight</span>, a dreamer who finds poetry in lines of code and beauty in digital creation.</p>
+                            <p>I've always believed that code is not merely a tool, but rather an art form—a delicate medium through which thoughts and emotions can be woven into reality. Through programming, I transform whispers of imagination into tangible digital experiences that touch hearts and minds.</p>
+                            <p>As a developer, I am drawn to the gentle frontiers of technology, solving puzzles with grace while embracing the ever-flowing river of knowledge. In this swiftly evolving digital era, nurturing curiosity and passion remains the most precious virtue.</p>
+                            <p>Whether you've wandered here by chance or sought this place with purpose, I hope you find something that resonates within these digital pages—perhaps a moment of wonder or a spark of inspiration.</p>
+                            <p class="about-signature">Warmly yours,<br>ZeroNight</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="life-counter">
+            <div class="life-title">
+                <h2>I'm <span class="alive-text">Alive</span></h2>
+                <div class="life-pulse"></div>
+            </div>
+            
+            <div class="cosmos-container">
+                <div class="orbit orbit-1">
+                    <div class="planet planet-years">
+                        <span id="years">0</span>
+                        <div class="planet-label">Years</div>
+                    </div>
+                </div>
+                <div class="orbit orbit-2">
+                    <div class="planet planet-days">
+                        <span id="days">0</span>
+                        <div class="planet-label">Days</div>
+                    </div>
+                </div>
+                <div class="orbit orbit-3">
+                    <div class="planet planet-hours">
+                        <span id="hours">0</span>
+                        <div class="planet-label">Hours</div>
+                    </div>
+                </div>
+                <div class="star"></div>
+            </div>
+            
+            <p class="life-since">Since March 19, 2004</p>
+        </section>
+
+        <section class="contact">
+            <h2>Contact</h2>
+            <div class="contact-items">
+                <div class="contact-item" data-clipboard="Zero__Night">
+                    <div class="icon"><i class="fab fa-weixin"></i></div>
+                    <div class="info">
+                        <h3>WeChat</h3>
+                        <p id="wechat-text">Zero__Night</p>
+                        <div class="copy-indicator">
+                            <span class="copied-tooltip">Copied!</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-item" data-clipboard="candy_night@163.com">
+                    <div class="icon"><i class="far fa-envelope"></i></div>
+                    <div class="info">
+                        <h3>Email</h3>
+                        <a href="mailto:candy_night@163.com" id="email-text">Candy_Night@163.com</a>
+                        <div class="copy-indicator">
+                            <span class="copied-tooltip">Copied!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <!-- 添加Logo到页脚上方 -->
+            <div class="footer-logo-container">
+                <img src="../assets/images/cat.png" alt="ZeroNight Logo" class="footer-logo">
+            </div>
+            <!-- 修改页脚 -->
+            <div class="footer-decoration">
+                <div class="footer-star"></div>
+                <div class="footer-cat"></div>
+                <p>&copy; <span id="current-year"></span> ZERONIGHT</p>
+                <div class="footer-cat"></div>
+                <div class="footer-star"></div>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 信封打开效果
+        const envelope = document.querySelector('.envelope');
+        const envelopeSeal = document.querySelector('.envelope-seal');
+        const envelopeContainer = document.querySelector('.envelope-container');
+        
+        // 获取信封和信的尺寸
+        const letterContent = document.querySelector('.letter-content');
+        
+        // 调整信封大小以匹配信的高度
+        function adjustEnvelopeSize() {
+            const letterHeight = letterContent.offsetHeight;
+            envelope.style.height = letterHeight + 'px';
+        }
+        
+        // 页面加载后和窗口大小改变时调整信封大小
+        window.addEventListener('load', adjustEnvelopeSize);
+        window.addEventListener('resize', adjustEnvelopeSize);
+        
+        // 点击信封打开
+        function openEnvelope() {
+            envelopeContainer.classList.add('open');
+        }
+        
+        envelope.addEventListener('click', openEnvelope);
+        envelopeSeal.addEventListener('click', openEnvelope);
+        
+        // 初始化复制功能
+        initClipboard();
+        
+        // 复制功能实现
+        function initClipboard() {
+            const clipboardItems = document.querySelectorAll('[data-clipboard]');
+            
+            clipboardItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const text = item.getAttribute('data-clipboard');
+                    navigator.clipboard.writeText(text)
+                        .then(() => {
+                            // 添加复制成功的样式
+                            item.classList.add('copied');
+                            
+                            // 2秒后移除样式
+                            setTimeout(() => {
+                                item.classList.remove('copied');
+                            }, 2000);
+                        })
+                        .catch(err => {
+                            console.error('复制失败:', err);
+                        });
+                });
+            });
+        }
+        
+        // 创建星星背景
+        createStars();
+        
+        function createStars() {
+            const starsContainer = document.getElementById('starsContainer');
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            
+            // 创建更少的星星
+            createStarElements(3, 'tiny-star', starsContainer, windowWidth, windowHeight);
+            createStarElements(2, 'small-star', starsContainer, windowWidth, windowHeight);
+            createStarElements(1, 'medium-star', starsContainer, windowWidth, windowHeight);
+        }
+        
+        function createStarElements(count, className, container, maxWidth, maxHeight) {
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = className;
+                
+                // 随机位置
+                star.style.left = `${Math.random() * maxWidth}px`;
+                star.style.top = `${Math.random() * maxHeight}px`;
+                
+                // 随机延迟动画
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                
+                container.appendChild(star);
+            }
+        }
+        
+        // Logo点击爆炸效果
+        const logo = document.querySelector('.footer-logo');
+        const explosionContainer = document.getElementById('explosionContainer');
+        
+        logo.addEventListener('click', createExplosion);
+        
+        function createExplosion(event) {
+            // 获取点击位置相对于视口的坐标
+            const rect = event.target.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            // 创建爆炸星星
+            const starCount = 30; // 星星数量
+            
+            for (let i = 0; i < starCount; i++) {
+                // 创建星星元素
+                const star = document.createElement('div');
+                star.className = `explosion-star explosion-star-${Math.floor(Math.random() * 5) + 1}`;
+                
+                // 设置初始位置为logo中心
+                star.style.left = `${centerX}px`;
+                star.style.top = `${centerY}px`;
+                
+                // 随机大小
+                const size = 5 + Math.random() * 10;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // 随机飞出方向和距离
+                const angle = Math.random() * Math.PI * 2; // 随机角度
+                const distance = 50 + Math.random() * 150; // 随机距离
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+                
+                // 设置CSS变量用于动画
+                star.style.setProperty('--tx', `${tx}px`);
+                star.style.setProperty('--ty', `${ty}px`);
+                
+                // 添加到容器
+                explosionContainer.appendChild(star);
+                
+                // 设置动画
+                requestAnimationFrame(() => {
+                    star.style.animation = `explosion-animation ${0.5 + Math.random() * 0.5}s ease-out forwards`;
+                });
+                
+                // 动画结束后移除星星
+                star.addEventListener('animationend', () => {
+                    explosionContainer.removeChild(star);
+                });
+            }
+            
+            // 播放音效（可选）
+            // const audio = new Audio('path/to/pop-sound.mp3');
+            // audio.play();
+        }
+    });
+    </script>
+</body>
+</html> 
