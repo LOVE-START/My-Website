@@ -29,7 +29,7 @@ function initVinylPlayer() {
     if (!player) return;
 
     const labelImg = document.createElement('img');
-    labelImg.src = '../assets/images/moon-cat.png';
+    labelImg.src = 'assets/images/moon-cat.png';
     labelImg.alt = 'Now Playing';
     labelImg.className = 'vinyl-label-img';
     label.appendChild(labelImg);

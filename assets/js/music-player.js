@@ -5,7 +5,7 @@
 
 const GlobalMusicPlayer = (function() {
     const STORAGE_KEY = 'musicPlayerState';
-    const AUDIO_SRC = '../assets/beloved.mp3';
+    const AUDIO_SRC = 'assets/beloved.mp3';
     
     let audio = null;
     let isInitialized = false;
